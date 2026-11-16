@@ -1,0 +1,1792 @@
+<title>CCNA 200-301 Study Kit</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: sticky tab bar over a single 960px reading column; exam is a focused one-question view, labs are collapsible runbooks. */
+:root{
+  --bg:#f3f6f9; --surface:#ffffff; --fg:#13202d; --muted:#5b6978; --line:#d6dde5;
+  --accent:#0a62c2; --accent-ink:#ffffff; --accent-soft:#e3eefb;
+  --good:#1d7f47; --good-soft:#e2f4ea; --bad:#b9372b; --bad-soft:#fbe7e4; --warn:#9a6410; --warn-soft:#fbf0dc;
+  --code-bg:#eaeff4; --code-fg:#17324d;
+  --f-display:"Archivo","Segoe UI",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e151d; --surface:#151f2a; --fg:#e2e8ef; --muted:#93a2b2; --line:#26364a;
+  --accent:#5aa7f2; --accent-ink:#06121f; --accent-soft:#16304c;
+  --good:#53c482; --good-soft:#143323; --bad:#f27a6e; --bad-soft:#3a1a17; --warn:#e8b45c; --warn-soft:#3a2c12;
+  --code-bg:#0a1118; --code-fg:#cfe3f7; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e151d; --surface:#151f2a; --fg:#e2e8ef; --muted:#93a2b2; --line:#26364a;
+  --accent:#5aa7f2; --accent-ink:#06121f; --accent-soft:#16304c;
+  --good:#53c482; --good-soft:#143323; --bad:#f27a6e; --bad-soft:#3a1a17; --warn:#e8b45c; --warn-soft:#3a2c12;
+  --code-bg:#0a1118; --code-fg:#cfe3f7; color-scheme:dark}
+
+*{box-sizing:border-box}
+/* .view sets display:grid, which beats the browser's built-in [hidden] rule; force hidden views to stay hidden in every browser. */
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.55}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+.wrap{max-width:960px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.2}
+code,pre,.mono{font-family:var(--f-mono)}
+code{background:var(--code-bg);color:var(--code-fg);padding:.05em .35em;border-radius:4px;font-size:.92em}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.masthead{background:var(--surface);border-bottom:1px solid var(--line)}
+.masthead .wrap{padding-block:22px 0}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.masthead h1{font-size:clamp(24px,4vw,32px);font-weight:800;margin-top:4px}
+.masthead p{color:var(--muted);margin:6px 0 0;max-width:65ch}
+.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+.tabs .wrap{display:flex;gap:4px;overflow-x:auto}
+.tab{background:none;border:0;border-bottom:3px solid transparent;padding:12px 14px 10px;color:var(--muted);font-weight:600;white-space:nowrap}
+.tab[aria-selected="true"]{color:var(--fg);border-bottom-color:var(--accent)}
+.tab small{font-weight:500;color:var(--muted);margin-left:6px;font-family:var(--f-mono)}
+main .wrap{padding-block:24px 64px}
+.view{display:grid;gap:20px}
+
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px}
+.btn{border:1px solid var(--line);background:var(--surface);color:var(--fg);padding:9px 16px;border-radius:7px;font-weight:600}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.danger{background:var(--bad);border-color:var(--bad);color:#fff}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.spacer{flex:1}
+.chip{display:inline-block;font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;background:var(--accent-soft);color:var(--accent)}
+.muted{color:var(--muted)}
+
+/* domain table */
+.dom-table{width:100%;border-collapse:collapse;font-size:14px}
+.dom-table th,.dom-table td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line)}
+.dom-table th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600}
+.num{font-variant-numeric:tabular-nums;text-align:right!important;white-space:nowrap}
+.bar{height:8px;background:var(--code-bg);border-radius:4px;overflow:hidden;min-width:60px}
+.bar span{display:block;height:100%;background:var(--accent)}
+.bar span.ok{background:var(--good)} .bar span.low{background:var(--bad)}
+
+/* question */
+.q-head{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;margin-bottom:12px}
+.q-text{font-size:17px;font-weight:500;margin:0 0 12px;max-width:70ch}
+.q-code{background:var(--code-bg);color:var(--code-fg);padding:12px 14px;border-radius:8px;overflow-x:auto;font-size:13.5px;margin:0 0 14px;white-space:pre}
+.opts{display:grid;gap:8px}
+.opt{display:flex;gap:12px;align-items:flex-start;text-align:left;width:100%;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px 12px;color:var(--fg)}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt .key{flex:none;width:24px;height:24px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-size:12px;font-weight:600;font-family:var(--f-mono);color:var(--muted)}
+.opt.multi .key{border-radius:5px}
+.opt .txt{min-width:0;overflow-wrap:anywhere}
+.opt.sel{border-color:var(--accent);background:var(--accent-soft)}
+.opt.sel .key{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.opt.right{border-color:var(--good);background:var(--good-soft)}
+.opt.right .key{background:var(--good);border-color:var(--good);color:#fff}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.wrong .key{background:var(--bad);border-color:var(--bad);color:#fff}
+.opt:disabled{cursor:default}
+.explain{margin-top:12px;padding:12px 14px;border-radius:8px;background:var(--code-bg);font-size:14px}
+.explain b{font-family:var(--f-display)}
+.verdict-ok{color:var(--good);font-weight:700} .verdict-bad{color:var(--bad);font-weight:700}
+
+/* exam */
+.exam-top{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.timer{font-family:var(--f-mono);font-size:20px;font-weight:500;font-variant-numeric:tabular-nums}
+.timer.low{color:var(--bad)}
+.palette{display:grid;grid-template-columns:repeat(auto-fill,minmax(36px,1fr));gap:6px}
+.pal{height:34px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--muted);font-family:var(--f-mono);font-size:12px;position:relative}
+.pal.answered{background:var(--accent-soft);color:var(--accent);border-color:var(--accent-soft)}
+.pal.current{outline:2px solid var(--accent);outline-offset:1px;color:var(--fg)}
+.pal.flagged::after{content:"";position:absolute;top:3px;right:3px;width:7px;height:7px;border-radius:50%;background:var(--warn)}
+.pal.right{background:var(--good-soft);color:var(--good);border-color:var(--good-soft)}
+.pal.wrongp{background:var(--bad-soft);color:var(--bad);border-color:var(--bad-soft)}
+.flagbtn[aria-pressed="true"]{background:var(--warn-soft);border-color:var(--warn);color:var(--warn)}
+.confirm{border:1px solid var(--warn);background:var(--warn-soft);border-radius:8px;padding:12px 14px}
+.score-big{font-family:var(--f-display);font-size:48px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+.stat-row{display:flex;flex-wrap:wrap;gap:28px;align-items:flex-end}
+.stat-row .lbl{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.stat-row .val{font-family:var(--f-display);font-size:22px;font-weight:700;font-variant-numeric:tabular-nums}
+.res-item{border-top:1px solid var(--line);padding-top:16px}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:12px;color:var(--muted)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+
+/* review */
+.filters{display:flex;flex-wrap:wrap;gap:6px}
+.fchip{border:1px solid var(--line);background:var(--surface);color:var(--muted);border-radius:999px;padding:5px 12px;font-size:13px;font-weight:600}
+.fchip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.rv-list{display:grid;gap:14px}
+.rv-card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px}
+.rv-num{font-family:var(--f-mono);font-size:13px;color:var(--muted)}
+
+/* labs */
+.lab-intro ul{margin:8px 0 0;padding-left:20px}
+.lab{background:var(--surface);border:1px solid var(--line);border-radius:10px}
+.lab>summary{list-style:none;cursor:pointer;padding:16px 18px;display:flex;gap:14px;align-items:flex-start}
+.lab>summary::-webkit-details-marker{display:none}
+.lab-n{flex:none;font-family:var(--f-mono);font-size:12px;font-weight:500;color:var(--accent);background:var(--accent-soft);border-radius:6px;padding:4px 8px;margin-top:2px}
+.lab-t{min-width:0;flex:1}
+.lab-t h3{font-size:18px}
+.lab-t p{margin:3px 0 0;font-size:13px;color:var(--muted)}
+.lab-state{flex:none;font-size:12px;font-weight:600;color:var(--good);margin-top:4px}
+.lab>summary::after{content:"+";flex:none;font-family:var(--f-mono);font-size:18px;color:var(--muted);line-height:1.2}
+.lab[open]>summary::after{content:"−"}
+.lab-body{padding:0 18px 20px;display:grid;gap:16px;min-width:0}
+.lab-body h4{font-family:var(--f-display);font-size:13px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin:6px 0 0}
+.lab-body p{margin:0;max-width:72ch}
+.lab-body ol,.lab-body ul{margin:0;padding-left:22px;display:grid;gap:6px;max-width:75ch}
+.topo{background:var(--code-bg);color:var(--code-fg);padding:14px;border-radius:8px;overflow-x:auto;font-size:13px;line-height:1.35;margin:0}
+.tbl-wrap{overflow-x:auto}
+.tbl{border-collapse:collapse;font-size:13.5px;min-width:100%}
+.tbl th,.tbl td{border-bottom:1px solid var(--line);padding:6px 10px;text-align:left;white-space:nowrap}
+.tbl th{font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.tbl td{font-family:var(--f-mono);font-size:13px}
+.tbl td:first-child{font-family:var(--f-body);font-weight:600}
+.note{border-left:3px solid var(--warn);background:var(--warn-soft);padding:10px 12px;border-radius:0 6px 6px 0;font-size:14px;max-width:75ch}
+.sol{border:1px solid var(--line);border-radius:8px}
+.sol>summary{cursor:pointer;padding:10px 14px;font-weight:600;color:var(--accent)}
+.sol-body{padding:0 14px 14px;display:grid;gap:12px;min-width:0}
+.cfg{min-width:0}
+.cfg .dev{font-family:var(--f-mono);font-size:12px;font-weight:500;color:var(--muted);margin-bottom:4px}
+.cfg pre{background:var(--code-bg);color:var(--code-fg);padding:12px 14px;border-radius:8px;overflow-x:auto;font-size:13px;line-height:1.45;margin:0}
+.done{display:inline-flex;gap:8px;align-items:center;font-weight:600;font-size:14px}
+.done input{width:18px;height:18px;accent-color:var(--good)}
+@media (max-width:560px){.panel{padding:16px}.q-text{font-size:16px}.lab>summary{padding:14px}.lab-body{padding:0 14px 16px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Cisco CCNA 200-301 · exam blueprint v1.1</div>
+    <h1>CCNA Study Kit</h1>
+    <p>A timed 50-question practice exam, two 50-question review sets with explanations, and 11 Packet Tracer labs. Questions follow the six blueprint domains and their weightings.</p>
+    <div style="height:14px"></div>
+  </div>
+</header>
+<nav class="tabs" aria-label="Sections">
+  <div class="wrap" role="tablist">
+    <button class="tab" role="tab" data-view="exam" id="tab-exam">Practice Exam<small>50 Q · 60 min</small></button>
+    <button class="tab" role="tab" data-view="review" id="tab-review">Review<small>2 × 50 Q</small></button>
+    <button class="tab" role="tab" data-view="labs" id="tab-labs">Packet Tracer Labs<small>11</small></button>
+  </div>
+</nav>
+
+<main><div class="wrap">
+
+<!-- ================= EXAM ================= -->
+<section class="view" id="view-exam" role="tabpanel" aria-labelledby="tab-exam"></section>
+
+<!-- ================= REVIEW ================= -->
+<section class="view" id="view-review" role="tabpanel" aria-labelledby="tab-review" hidden>
+  <div class="panel">
+    <div class="row">
+      <div>
+        <h2 style="font-size:20px">Review questions</h2>
+        <p class="muted" style="margin:4px 0 0">Answer each question to see whether you're right and why. Questions marked "Choose two" need both selections before you check them.</p>
+      </div>
+    </div>
+    <div class="filters" id="rv-sets" role="group" aria-label="Question set" style="margin-top:14px">
+      <button class="fchip" data-set="1" aria-pressed="true">Set A · 50 questions</button>
+      <button class="fchip" data-set="2" aria-pressed="false">Set B · 50 new questions</button>
+    </div>
+    <div class="stat-row" style="margin-top:16px">
+      <div><div class="lbl">Answered</div><div class="val" id="rv-answered">0 / 50</div></div>
+      <div><div class="lbl">Correct</div><div class="val" id="rv-correct">0</div></div>
+      <div><div class="lbl">Accuracy</div><div class="val" id="rv-acc">–</div></div>
+      <div class="spacer"></div>
+      <div class="row">
+        <button class="btn" id="rv-reveal">Show all answers</button>
+        <button class="btn" id="rv-reset">Reset</button>
+      </div>
+    </div>
+    <div class="filters" id="rv-filters" style="margin-top:16px"></div>
+  </div>
+  <div class="rv-list" id="rv-list"></div>
+</section>
+
+<!-- ================= LABS ================= -->
+<section class="view" id="view-labs" role="tabpanel" aria-labelledby="tab-labs" hidden>
+  <div class="panel lab-intro">
+    <h2 style="font-size:20px">Packet Tracer lab scenarios</h2>
+    <p class="muted" style="margin:4px 0 0">Built for Cisco Packet Tracer 8.x. Each lab lists its topology, addressing, tasks and verification commands. Try the tasks first, then open the solution configs to compare.</p>
+    <ul class="muted" style="font-size:14px">
+      <li>Device models: routers <b>2911</b>, switches <b>2960-24TT</b>, Layer 3 switch <b>3650-24PS</b>, PC-PT, Server-PT. Lab 11 adds a <b>WLC-3504</b>, <b>3702i</b> lightweight APs, a <b>3560-24PS</b> PoE switch and Laptop-PT.</li>
+      <li>Cables: Copper Straight-Through for PC/router to switch; Copper Cross-Over for switch to switch, router to router and PC to router. The lightning-bolt "automatic" cable also picks correctly.</li>
+      <li>Passwords in these labs are for practice only. Never reuse them on real equipment.</li>
+      <li>Save your work in each device with <code>copy running-config startup-config</code> and save the .pkt file before closing Packet Tracer.</li>
+    </ul>
+    <p style="margin-top:10px;font-size:14px" id="lab-progress" class="muted"></p>
+  </div>
+
+  <!-- LAB 1 -->
+  <details class="lab" id="lab-1" open>
+    <summary><span class="lab-n">LAB 01</span><span class="lab-t"><h3>Secure device baseline and SSH</h3><p>Exam topics 4.8, 5.3 · Basic IOS configuration, passwords, banners, SSH · ~45 min</p></span><span class="lab-state" data-state="1"></span></summary>
+    <div class="lab-body">
+      <p><b>Scenario.</b> A new branch router and access switch arrived from the warehouse with factory defaults. Before they go into production you must harden them so that only an authorized administrator can manage them, and only over SSH.</p>
+      <h4>Topology</h4>
+<pre class="topo">  PC1 ──Fa0/1─[ S1 2960 ]─Gi0/1──────G0/0─[ R1 2911 ]
+   └───── console cable (RS-232 → R1 Console), optional</pre>
+      <div class="tbl-wrap"><table class="tbl">
+        <tr><th>Device</th><th>Interface</th><th>IP address / prefix</th><th>Default gateway</th></tr>
+        <tr><td>R1</td><td>G0/0</td><td>192.168.1.1 /24</td><td>–</td></tr>
+        <tr><td>S1</td><td>VLAN 1</td><td>192.168.1.2 /24</td><td>192.168.1.1</td></tr>
+        <tr><td>PC1</td><td>NIC</td><td>192.168.1.10 /24</td><td>192.168.1.1</td></tr>
+      </table></div>
+      <h4>Tasks</h4>
+      <ol>
+        <li>Build and cable the topology. Set PC1's IP settings (Desktop › IP Configuration).</li>
+        <li>On both devices: set the hostname, disable DNS lookup of mistyped commands (<code>no ip domain-lookup</code>), and set an enable secret.</li>
+        <li>On R1, require a 10-character minimum for passwords configured from now on (do this before setting R1's passwords).</li>
+        <li>Secure the console line with a password, <code>logging synchronous</code> and a 5-minute exec timeout.</li>
+        <li>Encrypt plain-text passwords in the config, and add a MOTD banner warning against unauthorized access.</li>
+        <li>On R1, block logins for 120 seconds after 3 failed attempts within 60 seconds.</li>
+        <li>Configure SSH version 2: domain name <code>ccna.lab</code>, local user <code>admin</code>, 1024-bit RSA keys. VTY lines must use local login and accept SSH only (R1 lines 0–4, S1 lines 0–15).</li>
+        <li>Address R1 G0/0 and the S1 management SVI, and give S1 a default gateway.</li>
+        <li>Administratively shut down every unused switch port on S1.</li>
+        <li>Save the configurations.</li>
+      </ol>
+      <h4>Verify</h4>
+      <ul>
+        <li>From PC1 Command Prompt: <code>ssh -l admin 192.168.1.1</code> and <code>ssh -l admin 192.168.1.2</code> succeed. <code>telnet 192.168.1.1</code> is refused.</li>
+        <li><code>show ip ssh</code> reports SSH enabled, version 2.0.</li>
+        <li><code>show running-config</code> shows no clear-text passwords (console password appears as type 7).</li>
+        <li><code>show ip interface brief</code> on S1: Fa0/2–24 and Gi0/2 are "administratively down".</li>
+      </ul>
+      <div class="note">Packet Tracer prompts <i>How many bits in the modulus [512]:</i> after <code>crypto key generate rsa</code>. Enter 1024. SSH version 2 needs a key of at least 768 bits.</div>
+      <details class="sol"><summary>Show solution configs</summary><div class="sol-body">
+        <div class="cfg"><div class="dev">R1</div><pre>enable
+configure terminal
+hostname R1
+no ip domain-lookup
+security passwords min-length 10
+enable secret Class12345
+line console 0
+ password Cons12345!
+ login
+ logging synchronous
+ exec-timeout 5 0
+ exit
+service password-encryption
+banner motd #Authorized access only. Activity is monitored.#
+login block-for 120 attempts 3 within 60
+ip domain-name ccna.lab
+username admin privilege 15 secret Admin12345
+crypto key generate rsa
+  ! How many bits in the modulus [512]: 1024
+ip ssh version 2
+line vty 0 4
+ login local
+ transport input ssh
+ exit
+interface g0/0
+ description LAN to S1
+ ip address 192.168.1.1 255.255.255.0
+ no shutdown
+ end
+copy running-config startup-config</pre></div>
+        <div class="cfg"><div class="dev">S1</div><pre>enable
+configure terminal
+hostname S1
+no ip domain-lookup
+enable secret Class12345
+line console 0
+ password Cons12345!
+ login
+ logging synchronous
+ exec-timeout 5 0
+ exit
+service password-encryption
+banner motd #Authorized access only. Activity is monitored.#
+ip domain-name ccna.lab
+username admin privilege 15 secret Admin12345
+crypto key generate rsa
+  ! How many bits in the modulus [512]: 1024
+ip ssh version 2
+line vty 0 15
+ login local
+ transport input ssh
+ exit
+interface vlan 1
+ ip address 192.168.1.2 255.255.255.0
+ no shutdown
+ exit
+ip default-gateway 192.168.1.1
+interface range fa0/2 - 24 , g0/2
+ shutdown
+ end
+copy running-config startup-config</pre></div>
+      </div></details>
+      <label class="done"><input type="checkbox" id="done-1" data-lab="1"> Mark lab complete</label>
+    </div>
+  </details>
+
+  <!-- LAB 2 -->
+  <details class="lab" id="lab-2">
+    <summary><span class="lab-n">LAB 02</span><span class="lab-t"><h3>VLANs and 802.1Q trunking</h3><p>Exam topics 2.1, 2.2, 2.3 · VLANs, access ports, trunks, native VLAN, DTP, CDP · ~40 min</p></span><span class="lab-state" data-state="2"></span></summary>
+    <div class="lab-body">
+      <p><b>Scenario.</b> Sales and Engineering share two access switches on the same floor. Separate them into their own VLANs, carry both VLANs between the switches on a trunk, and move switch management off VLAN 1.</p>
+      <h4>Topology</h4>
+<pre class="topo">  PC1 (VLAN 10)  PC2 (VLAN 20)              PC3 (VLAN 10)  PC4 (VLAN 20)
+      Fa0/6          Fa0/11                     Fa0/6          Fa0/11
+         \          /                              \          /
+         [ S1 2960 ]─Gi0/1════ 802.1Q trunk ════Gi0/1─[ S2 2960 ]</pre>
+      <div class="tbl-wrap"><table class="tbl">
+        <tr><th>VLAN</th><th>Name</th><th>Use</th></tr>
+        <tr><td>10</td><td>SALES</td><td>Fa0/6 on both switches</td></tr>
+        <tr><td>20</td><td>ENGINEERING</td><td>Fa0/11 on both switches</td></tr>
+        <tr><td>99</td><td>MANAGEMENT</td><td>Switch SVIs</td></tr>
+        <tr><td>999</td><td>NATIVE</td><td>Trunk native VLAN (no hosts)</td></tr>
+      </table></div>
+      <div class="tbl-wrap"><table class="tbl">
+        <tr><th>Device</th><th>Interface</th><th>IP address / prefix</th><th>VLAN</th></tr>
+        <tr><td>S1</td><td>VLAN 99</td><td>192.168.99.11 /24</td><td>99</td></tr>
+        <tr><td>S2</td><td>VLAN 99</td><td>192.168.99.12 /24</td><td>99</td></tr>
+        <tr><td>PC1</td><td>NIC</td><td>192.168.10.11 /24</td><td>10</td></tr>
+        <tr><td>PC2</td><td>NIC</td><td>192.168.20.12 /24</td><td>20</td></tr>
+        <tr><td>PC3</td><td>NIC</td><td>192.168.10.13 /24</td><td>10</td></tr>
+        <tr><td>PC4</td><td>NIC</td><td>192.168.20.14 /24</td><td>20</td></tr>
+      </table></div>
+      <h4>Tasks</h4>
+      <ol>
+        <li>Cable the topology (S1–S2 with a cross-over cable) and address the PCs. There is no router, so leave the PC gateways blank.</li>
+        <li>Create VLANs 10, 20, 99 and 999 with the names shown on both switches.</li>
+        <li>Make Fa0/6 and Fa0/11 static access ports in the correct VLANs.</li>
+        <li>Make Gi0/1 a static trunk: native VLAN 999, allowed VLANs 10, 20, 99, 999, and DTP disabled.</li>
+        <li>Configure the VLAN 99 management SVI on each switch.</li>
+        <li><b>Break and fix:</b> change S2's native VLAN back to 1, wait for the CDP native VLAN mismatch message on the console, then fix it.</li>
+      </ol>
+      <h4>Verify</h4>
+      <ul>
+        <li><code>show vlan brief</code>: Fa0/6 in VLAN 10, Fa0/11 in VLAN 20. Gi0/1 is not listed because trunk ports don't appear there.</li>
+        <li><code>show interfaces trunk</code>: Gi0/1 mode "on", native VLAN 999, allowed 10,20,99,999.</li>
+        <li><code>show interfaces g0/1 switchport</code>: Negotiation of Trunking: Off.</li>
+        <li>PC1 pings PC3 and PC2 pings PC4. PC1 <b>cannot</b> ping PC2: they are in different VLANs and subnets with no router (that's Lab 3).</li>
+        <li>S1 pings S2 at 192.168.99.12.</li>
+      </ul>
+      <details class="sol"><summary>Show solution configs</summary><div class="sol-body">
+        <div class="cfg"><div class="dev">S1 (S2 is identical except the SVI address 192.168.99.12)</div><pre>enable
+configure terminal
+hostname S1
+vlan 10
+ name SALES
+vlan 20
+ name ENGINEERING
+vlan 99
+ name MANAGEMENT
+vlan 999
+ name NATIVE
+ exit
+interface fa0/6
+ switchport mode access
+ switchport access vlan 10
+interface fa0/11
+ switchport mode access
+ switchport access vlan 20
+interface g0/1
+ switchport mode trunk
+ switchport trunk native vlan 999
+ switchport trunk allowed vlan 10,20,99,999
+ switchport nonegotiate
+interface vlan 99
+ ip address 192.168.99.11 255.255.255.0
+ no shutdown
+ end
+copy running-config startup-config</pre></div>
+      </div></details>
+      <label class="done"><input type="checkbox" id="done-2" data-lab="2"> Mark lab complete</label>
+    </div>
+  </details>
+
+  <!-- LAB 3 -->
+  <details class="lab" id="lab-3">
+    <summary><span class="lab-n">LAB 03</span><span class="lab-t"><h3>Inter-VLAN routing two ways</h3><p>Exam topics 2.1c, 3.1 · Router-on-a-stick, Layer 3 switch SVIs, routed ports · ~50 min</p></span><span class="lab-state" data-state="3"></span></summary>
+    <div class="lab-body">
+      <p><b>Scenario.</b> The office from Lab 2 now needs its VLANs to talk to each other. Site A has only a router, so you'll use router-on-a-stick. Site B has a Layer 3 switch, so it routes with SVIs. As a stretch goal, link the two sites with a routed port.</p>
+      <h4>Topology</h4>
+<pre class="topo">Part A — router-on-a-stick              Part B — Layer 3 switch
+
+       [ R1 2911 ] G0/0                         [ MLS1 3650-24PS ]
+            │  (subinterfaces .10 .20 .99)        Gi1/0/6    Gi1/0/11
+            │ trunk                                 │          │
+          Gi0/1                                    PC3        PC4
+       [ S1 2960 ]                               VLAN 30    VLAN 40
+       Fa0/6   Fa0/11
+        PC1     PC2                    Stretch: R1 G0/1 ──── Gi1/0/24 MLS1
+      VLAN 10  VLAN 20                          (10.0.0.0/30 routed link)</pre>
+      <div class="tbl-wrap"><table class="tbl">
+        <tr><th>Device</th><th>Interface</th><th>IP address / prefix</th><th>Default gateway</th></tr>
+        <tr><td>R1</td><td>G0/0.10</td><td>192.168.10.1 /24</td><td>–</td></tr>
+        <tr><td>R1</td><td>G0/0.20</td><td>192.168.20.1 /24</td><td>–</td></tr>
+        <tr><td>R1</td><td>G0/0.99</td><td>192.168.99.1 /24</td><td>–</td></tr>
+        <tr><td>R1</td><td>G0/1 (stretch)</td><td>10.0.0.2 /30</td><td>–</td></tr>
+        <tr><td>S1</td><td>VLAN 99</td><td>192.168.99.11 /24</td><td>192.168.99.1</td></tr>
+        <tr><td>PC1</td><td>NIC</td><td>192.168.10.10 /24</td><td>192.168.10.1</td></tr>
+        <tr><td>PC2</td><td>NIC</td><td>192.168.20.10 /24</td><td>192.168.20.1</td></tr>
+        <tr><td>MLS1</td><td>VLAN 30</td><td>192.168.30.1 /24</td><td>–</td></tr>
+        <tr><td>MLS1</td><td>VLAN 40</td><td>192.168.40.1 /24</td><td>–</td></tr>
+        <tr><td>MLS1</td><td>Gi1/0/24 (stretch)</td><td>10.0.0.1 /30</td><td>–</td></tr>
+        <tr><td>PC3</td><td>NIC</td><td>192.168.30.10 /24</td><td>192.168.30.1</td></tr>
+        <tr><td>PC4</td><td>NIC</td><td>192.168.40.10 /24</td><td>192.168.40.1</td></tr>
+      </table></div>
+      <div class="note">The 3650 ships without a power supply in Packet Tracer. Open MLS1 › Physical, power it off, drag an <b>AC-POWER-SUPPLY</b> into the empty bay, and power it on, or it will never boot.</div>
+      <h4>Tasks</h4>
+      <ol>
+        <li><b>Part A.</b> On S1 create VLANs 10, 20 and 99, set Fa0/6 and Fa0/11 as access ports, and make Gi0/1 a trunk.</li>
+        <li>On R1 bring up G0/0 (no IP on the physical interface) and create subinterfaces G0/0.10, .20 and .99 with 802.1Q encapsulation and the addresses above.</li>
+        <li>Give S1 its management SVI and default gateway.</li>
+        <li><b>Part B.</b> On MLS1 enable IP routing, create VLANs 30 and 40, set the access ports, and create SVIs 30 and 40.</li>
+        <li><b>Stretch.</b> Make MLS1 Gi1/0/24 a routed port, address R1 G0/1, and add static routes on both so PC1 can reach PC3.</li>
+      </ol>
+      <h4>Verify</h4>
+      <ul>
+        <li>R1 <code>show ip route</code> lists 192.168.10.0/24, .20.0/24 and .99.0/24 as connected (C) via the subinterfaces.</li>
+        <li><code>show interfaces trunk</code> on S1 shows Gi0/1 trunking with VLANs 1, 10, 20 and 99 active.</li>
+        <li>PC1 <code>tracert 192.168.20.10</code> shows 192.168.10.1 as the first hop.</li>
+        <li>MLS1 <code>show ip route</code> lists VLAN30 and VLAN40 as connected. PC3 pings PC4.</li>
+        <li>Stretch: PC1 pings PC3; <code>show ip route static</code> on both devices shows the routes you added.</li>
+      </ul>
+      <details class="sol"><summary>Show solution configs</summary><div class="sol-body">
+        <div class="cfg"><div class="dev">R1</div><pre>interface g0/0
+ no shutdown
+interface g0/0.10
+ encapsulation dot1Q 10
+ ip address 192.168.10.1 255.255.255.0
+interface g0/0.20
+ encapsulation dot1Q 20
+ ip address 192.168.20.1 255.255.255.0
+interface g0/0.99
+ encapsulation dot1Q 99
+ ip address 192.168.99.1 255.255.255.0
+! --- stretch ---
+interface g0/1
+ ip address 10.0.0.2 255.255.255.252
+ no shutdown
+ip route 192.168.30.0 255.255.255.0 10.0.0.1
+ip route 192.168.40.0 255.255.255.0 10.0.0.1</pre></div>
+        <div class="cfg"><div class="dev">S1</div><pre>vlan 10
+vlan 20
+vlan 99
+ exit
+interface fa0/6
+ switchport mode access
+ switchport access vlan 10
+interface fa0/11
+ switchport mode access
+ switchport access vlan 20
+interface g0/1
+ switchport mode trunk
+interface vlan 99
+ ip address 192.168.99.11 255.255.255.0
+ no shutdown
+ exit
+ip default-gateway 192.168.99.1</pre></div>
+        <div class="cfg"><div class="dev">MLS1</div><pre>ip routing
+vlan 30
+vlan 40
+ exit
+interface g1/0/6
+ switchport mode access
+ switchport access vlan 30
+interface g1/0/11
+ switchport mode access
+ switchport access vlan 40
+interface vlan 30
+ ip address 192.168.30.1 255.255.255.0
+ no shutdown
+interface vlan 40
+ ip address 192.168.40.1 255.255.255.0
+ no shutdown
+! --- stretch ---
+interface g1/0/24
+ no switchport
+ ip address 10.0.0.1 255.255.255.252
+ no shutdown
+ exit
+ip route 192.168.10.0 255.255.255.0 10.0.0.2
+ip route 192.168.20.0 255.255.255.0 10.0.0.2</pre></div>
+      </div></details>
+      <label class="done"><input type="checkbox" id="done-3" data-lab="3"> Mark lab complete</label>
+    </div>
+  </details>
+
+  <!-- LAB 4 -->
+  <details class="lab" id="lab-4">
+    <summary><span class="lab-n">LAB 04</span><span class="lab-t"><h3>Rapid PVST+ root placement and edge protection</h3><p>Exam topic 2.5 · Root bridge election, port roles, load sharing per VLAN, PortFast, BPDU Guard · ~50 min</p></span><span class="lab-state" data-state="4"></span></summary>
+    <div class="lab-body">
+      <p><b>Scenario.</b> Three distribution switches are cabled in a triangle for redundancy. Spanning tree picked a root on its own, based on the lowest MAC address. You will control root placement so VLAN 10 and VLAN 20 use different links, speed up convergence, and stop users from plugging rogue switches into access ports.</p>
+      <h4>Topology</h4>
+<pre class="topo">                    [ S1 2960 ]
+                  Gi0/1     Gi0/2
+                  /             \
+              Gi0/1             Gi0/1
+         [ S2 2960 ]─Gi0/2───Gi0/2─[ S3 2960 ]
+          Fa0/6  Fa0/11            Fa0/6  Fa0/11
+          PC1    PC3               PC2    PC4
+        VLAN 10  VLAN 20         VLAN 10  VLAN 20</pre>
+      <div class="tbl-wrap"><table class="tbl">
+        <tr><th>Device</th><th>Port</th><th>IP address / prefix</th><th>VLAN</th></tr>
+        <tr><td>PC1</td><td>S2 Fa0/6</td><td>192.168.10.21 /24</td><td>10</td></tr>
+        <tr><td>PC2</td><td>S3 Fa0/6</td><td>192.168.10.22 /24</td><td>10</td></tr>
+        <tr><td>PC3</td><td>S2 Fa0/11</td><td>192.168.20.23 /24</td><td>20</td></tr>
+        <tr><td>PC4</td><td>S3 Fa0/11</td><td>192.168.20.24 /24</td><td>20</td></tr>
+      </table></div>
+      <h4>Tasks</h4>
+      <ol>
+        <li>Cable the triangle with cross-over cables. On all switches create VLANs 10 and 20 and make Gi0/1 and Gi0/2 trunks. Set the access ports.</li>
+        <li>Before changing STP, run <code>show spanning-tree vlan 10</code> on every switch. Record the root bridge, each root port, and the port in the ALTN/BLK (or BLK) role. Explain why that switch became root.</li>
+        <li>Change all three switches to Rapid PVST+.</li>
+        <li>Make S1 the primary root for VLAN 10 and secondary for VLAN 20. Make S2 the primary root for VLAN 20 and secondary for VLAN 10.</li>
+        <li>Predict which S3 port blocks in each VLAN, then check. (Expected: VLAN 10 blocks S3 Gi0/2; VLAN 20 blocks S3 Gi0/1.)</li>
+        <li>Enable PortFast and BPDU Guard on all access ports. Also configure S2 Fa0/24 as an access port in VLAN 10 with PortFast and BPDU Guard.</li>
+        <li><b>Test BPDU Guard:</b> connect a new 2960 to S2 Fa0/24. The port should go err-disabled. Remove the switch, then recover the port with <code>shutdown</code> / <code>no shutdown</code>.</li>
+        <li><b>Test convergence:</b> start <code>ping -t 192.168.10.22</code> on PC1, then shut S3 Gi0/1. Watch S3's alternate port become the root port for VLAN 10.</li>
+      </ol>
+      <h4>Verify</h4>
+      <ul>
+        <li><code>show spanning-tree vlan 10</code> on S1: "This bridge is the root", priority 24586 (24576 + VLAN 10).</li>
+        <li><code>show spanning-tree vlan 20</code> on S2: "This bridge is the root", priority 24596.</li>
+        <li><code>show spanning-tree summary</code>: mode rapid-pvst.</li>
+        <li><code>show running-config</code> lists <code>spanning-tree portfast</code> and <code>spanning-tree bpduguard enable</code> on each access port. A PC's link turns green right away instead of waiting about 30 seconds.</li>
+        <li>After the BPDU test, <code>show interfaces fa0/24</code> on S2 reports err-disabled, and a %SPANTREE-2-BLOCK_BPDUGUARD log message appears.</li>
+      </ul>
+      <div class="note">Why S3 blocks different ports: in VLAN 10, S2 (priority 28682) has a lower bridge ID than S3 (32778), so S2's Gi0/2 wins the S2–S3 segment as designated and S3's Gi0/2 becomes alternate. In VLAN 20 the same logic makes S1 win the S1–S3 segment.</div>
+      <details class="sol"><summary>Show solution configs</summary><div class="sol-body">
+        <div class="cfg"><div class="dev">All switches (S1, S2, S3)</div><pre>vlan 10
+vlan 20
+ exit
+interface range g0/1 - 2
+ switchport mode trunk
+ exit
+spanning-tree mode rapid-pvst</pre></div>
+        <div class="cfg"><div class="dev">S1</div><pre>spanning-tree vlan 10 root primary
+spanning-tree vlan 20 root secondary</pre></div>
+        <div class="cfg"><div class="dev">S2</div><pre>spanning-tree vlan 20 root primary
+spanning-tree vlan 10 root secondary
+interface fa0/6
+ switchport mode access
+ switchport access vlan 10
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+interface fa0/11
+ switchport mode access
+ switchport access vlan 20
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+interface fa0/24
+ switchport mode access
+ switchport access vlan 10
+ spanning-tree portfast
+ spanning-tree bpduguard enable</pre></div>
+        <div class="cfg"><div class="dev">S3</div><pre>interface fa0/6
+ switchport mode access
+ switchport access vlan 10
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+interface fa0/11
+ switchport mode access
+ switchport access vlan 20
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+! Alternative to per-port commands (applies to all access ports):
+! spanning-tree portfast default
+! spanning-tree portfast bpduguard default</pre></div>
+      </div></details>
+      <label class="done"><input type="checkbox" id="done-4" data-lab="4"> Mark lab complete</label>
+    </div>
+  </details>
+
+  <!-- LAB 5 -->
+  <details class="lab" id="lab-5">
+    <summary><span class="lab-n">LAB 05</span><span class="lab-t"><h3>EtherChannel with LACP and PAgP</h3><p>Exam topic 2.4 · Layer 2 EtherChannel, LACP active/passive, PAgP desirable/auto · ~40 min</p></span><span class="lab-state" data-state="5"></span></summary>
+    <div class="lab-body">
+      <p><b>Scenario.</b> The uplinks from the core switch S1 are congested, and spanning tree is blocking half the cables you installed. Bundle the parallel links into EtherChannels so all of them carry traffic and STP treats each bundle as one logical link.</p>
+      <h4>Topology</h4>
+<pre class="topo">            Fa0/1 ══════ Fa0/1
+   [ S1 ]   Fa0/2 ══════ Fa0/2   [ S2 ]── Fa0/10 PC1 (VLAN 10)
+     ║       Po1 (LACP)             │
+     ║ Fa0/3 ═══ Fa0/3              │ Gi0/1
+     ║ Fa0/4 ═══ Fa0/4              │ (regular trunk)
+     ║  Po2 (PAgP)                  │ Gi0/1
+     ╚═══════════════════════[ S3 ]─┘── Fa0/10 PC2 (VLAN 10)</pre>
+      <div class="tbl-wrap"><table class="tbl">
+        <tr><th>Device</th><th>Interface</th><th>IP address / prefix</th><th>VLAN</th></tr>
+        <tr><td>S1</td><td>VLAN 99</td><td>192.168.99.1 /24</td><td>99</td></tr>
+        <tr><td>S2</td><td>VLAN 99</td><td>192.168.99.2 /24</td><td>99</td></tr>
+        <tr><td>S3</td><td>VLAN 99</td><td>192.168.99.3 /24</td><td>99</td></tr>
+        <tr><td>PC1</td><td>S2 Fa0/10</td><td>192.168.10.11 /24</td><td>10</td></tr>
+        <tr><td>PC2</td><td>S3 Fa0/10</td><td>192.168.10.12 /24</td><td>10</td></tr>
+      </table></div>
+      <h4>Tasks</h4>
+      <ol>
+        <li>Cable the topology. Before configuring anything, notice that STP blocks one link of each parallel pair (amber link lights).</li>
+        <li>Create VLANs 10 and 99 on all switches; configure PC ports as access ports in VLAN 10.</li>
+        <li>Bundle S1–S2 Fa0/1–2 into Port-channel 1 using LACP (S1 active, S2 passive).</li>
+        <li>Bundle S1–S3 Fa0/3–4 into Port-channel 2 using PAgP (S1 desirable, S3 auto).</li>
+        <li>Make both port-channels and the S2–S3 Gi0/1 link trunks allowing VLANs 10 and 99 only.</li>
+        <li>Configure the VLAN 99 SVIs.</li>
+        <li><b>Break and fix:</b> change S1's Po1 members to <code>channel-group 1 mode passive</code>. Explain why the bundle drops, then restore it.</li>
+      </ol>
+      <h4>Verify</h4>
+      <ul>
+        <li><code>show etherchannel summary</code>: Po1(SU) with protocol LACP and Po2(SU) with PAgP; member ports flagged (P).</li>
+        <li><code>show interfaces trunk</code> lists Po1 and Po2 instead of the physical ports.</li>
+        <li><code>show spanning-tree</code> shows Po1 and Po2 as single ports.</li>
+        <li>PC1 pings PC2, and the switches ping each other on 192.168.99.0/24.</li>
+      </ul>
+      <div class="note">If a bundle stays down after you fix a mismatch, shut and re-enable its member ports (<code>interface range fa0/1 - 2</code>, <code>shutdown</code>, <code>no shutdown</code>) on both switches.</div>
+      <details class="sol"><summary>Show solution configs</summary><div class="sol-body">
+        <div class="cfg"><div class="dev">S1</div><pre>vlan 10
+vlan 99
+ exit
+interface range fa0/1 - 2
+ switchport mode trunk
+ switchport trunk allowed vlan 10,99
+ channel-group 1 mode active
+interface range fa0/3 - 4
+ switchport mode trunk
+ switchport trunk allowed vlan 10,99
+ channel-group 2 mode desirable
+interface port-channel 1
+ switchport mode trunk
+ switchport trunk allowed vlan 10,99
+interface port-channel 2
+ switchport mode trunk
+ switchport trunk allowed vlan 10,99
+interface vlan 99
+ ip address 192.168.99.1 255.255.255.0
+ no shutdown</pre></div>
+        <div class="cfg"><div class="dev">S2</div><pre>vlan 10
+vlan 99
+ exit
+interface range fa0/1 - 2
+ switchport mode trunk
+ switchport trunk allowed vlan 10,99
+ channel-group 1 mode passive
+interface port-channel 1
+ switchport mode trunk
+ switchport trunk allowed vlan 10,99
+interface g0/1
+ switchport mode trunk
+ switchport trunk allowed vlan 10,99
+interface fa0/10
+ switchport mode access
+ switchport access vlan 10
+interface vlan 99
+ ip address 192.168.99.2 255.255.255.0
+ no shutdown</pre></div>
+        <div class="cfg"><div class="dev">S3</div><pre>vlan 10
+vlan 99
+ exit
+interface range fa0/3 - 4
+ switchport mode trunk
+ switchport trunk allowed vlan 10,99
+ channel-group 2 mode auto
+interface port-channel 2
+ switchport mode trunk
+ switchport trunk allowed vlan 10,99
+interface g0/1
+ switchport mode trunk
+ switchport trunk allowed vlan 10,99
+interface fa0/10
+ switchport mode access
+ switchport access vlan 10
+interface vlan 99
+ ip address 192.168.99.3 255.255.255.0
+ no shutdown</pre></div>
+        <p class="muted" style="font-size:14px">Break-and-fix answer: LACP needs at least one side in <b>active</b> mode to start negotiation. Passive/passive never sends LACPDUs, so the ports stay unbundled.</p>
+      </div></details>
+      <label class="done"><input type="checkbox" id="done-5" data-lab="5"> Mark lab complete</label>
+    </div>
+  </details>
+
+  <!-- LAB 6 -->
+  <details class="lab" id="lab-6">
+    <summary><span class="lab-n">LAB 06</span><span class="lab-t"><h3>Dual-stack static routing with floating backups</h3><p>Exam topics 1.8, 3.1, 3.2, 3.3 · IPv4 and IPv6 static routes, link-local addresses, floating static routes · ~60 min</p></span><span class="lab-state" data-state="6"></span></summary>
+    <div class="lab-body">
+      <p><b>Scenario.</b> Three small offices are joined in a triangle of point-to-point links, and the company can't run a routing protocol yet. Route IPv4 and IPv6 statically. Traffic between Office 1 and Office 3 should use their direct link and fail over through Office 2 automatically if that link goes down.</p>
+      <h4>Topology</h4>
+<pre class="topo">        PC1                                 PC2
+         │ G0/0                              │ G0/0
+      [ R1 ]─G0/1────── 10.0.12.0/30 ──────G0/1─[ R2 ]
+        G0/2                                 G0/2
+          \  10.0.13.0/30       10.0.23.0/30  /
+           \                                 /
+           G0/1────────[ R3 ]────────────G0/2
+                        │ G0/0
+                       PC3</pre>
+      <div class="tbl-wrap"><table class="tbl">
+        <tr><th>Device</th><th>Interface</th><th>IPv4</th><th>IPv6 global</th><th>Link-local</th></tr>
+        <tr><td>R1</td><td>G0/0</td><td>192.168.1.1 /24</td><td>2001:db8:acad:1::1/64</td><td>fe80::1</td></tr>
+        <tr><td>R1</td><td>G0/1</td><td>10.0.12.1 /30</td><td>2001:db8:acad:12::1/64</td><td>fe80::1</td></tr>
+        <tr><td>R1</td><td>G0/2</td><td>10.0.13.1 /30</td><td>2001:db8:acad:13::1/64</td><td>fe80::1</td></tr>
+        <tr><td>R2</td><td>G0/0</td><td>192.168.2.1 /24</td><td>2001:db8:acad:2::1/64</td><td>fe80::2</td></tr>
+        <tr><td>R2</td><td>G0/1</td><td>10.0.12.2 /30</td><td>2001:db8:acad:12::2/64</td><td>fe80::2</td></tr>
+        <tr><td>R2</td><td>G0/2</td><td>10.0.23.1 /30</td><td>2001:db8:acad:23::1/64</td><td>fe80::2</td></tr>
+        <tr><td>R3</td><td>G0/0</td><td>192.168.3.1 /24</td><td>2001:db8:acad:3::1/64</td><td>fe80::3</td></tr>
+        <tr><td>R3</td><td>G0/1</td><td>10.0.13.2 /30</td><td>2001:db8:acad:13::2/64</td><td>fe80::3</td></tr>
+        <tr><td>R3</td><td>G0/2</td><td>10.0.23.2 /30</td><td>2001:db8:acad:23::2/64</td><td>fe80::3</td></tr>
+        <tr><td>PC1</td><td>NIC</td><td>192.168.1.10 /24, gw .1</td><td>2001:db8:acad:1::10/64</td><td>gw fe80::1</td></tr>
+        <tr><td>PC2</td><td>NIC</td><td>192.168.2.10 /24, gw .1</td><td>2001:db8:acad:2::10/64</td><td>gw fe80::2</td></tr>
+        <tr><td>PC3</td><td>NIC</td><td>192.168.3.10 /24, gw .1</td><td>2001:db8:acad:3::10/64</td><td>gw fe80::3</td></tr>
+      </table></div>
+      <h4>Tasks</h4>
+      <ol>
+        <li>Cable the routers and PCs with cross-over cables. Address all interfaces. Enable <code>ipv6 unicast-routing</code> on every router and set static link-local addresses.</li>
+        <li>Configure PCs with static IPv4 and IPv6 settings; use the router's link-local address as the IPv6 gateway.</li>
+        <li>Add IPv4 static routes so every LAN reaches every other LAN. R1 and R3 reach each other's LAN over their direct link.</li>
+        <li>On R1 and R3 add <b>floating</b> static routes (AD 10) to each other's LAN through R2.</li>
+        <li>Repeat steps 3–4 for IPv6.</li>
+        <li><b>Failover test:</b> shut R1 G0/2. Check that the floating routes appear on R1 and R3, then trace PC1 → PC3. Restore the link.</li>
+      </ol>
+      <h4>Verify</h4>
+      <ul>
+        <li><code>show ip route static</code> on R1: 192.168.3.0/24 [1/0] via 10.0.13.2. The floating route is <i>not</i> shown while the primary is up.</li>
+        <li>After shutting R1 G0/2: R1 shows <code>S 192.168.3.0/24 [10/0] via 10.0.12.2</code>, and PC1 <code>tracert 192.168.3.10</code> passes through 10.0.12.2.</li>
+        <li><code>show ipv6 route static</code> and <code>show ipv6 interface brief</code> show the IPv6 routes and addresses.</li>
+        <li>PC1 pings 2001:db8:acad:3::10 and 2001:db8:acad:2::10.</li>
+      </ul>
+      <details class="sol"><summary>Show solution configs</summary><div class="sol-body">
+        <div class="cfg"><div class="dev">R1</div><pre>ipv6 unicast-routing
+interface g0/0
+ ip address 192.168.1.1 255.255.255.0
+ ipv6 address fe80::1 link-local
+ ipv6 address 2001:db8:acad:1::1/64
+ no shutdown
+interface g0/1
+ ip address 10.0.12.1 255.255.255.252
+ ipv6 address fe80::1 link-local
+ ipv6 address 2001:db8:acad:12::1/64
+ no shutdown
+interface g0/2
+ ip address 10.0.13.1 255.255.255.252
+ ipv6 address fe80::1 link-local
+ ipv6 address 2001:db8:acad:13::1/64
+ no shutdown
+ exit
+ip route 192.168.2.0 255.255.255.0 10.0.12.2
+ip route 192.168.3.0 255.255.255.0 10.0.13.2
+ip route 192.168.3.0 255.255.255.0 10.0.12.2 10
+ipv6 route 2001:db8:acad:2::/64 2001:db8:acad:12::2
+ipv6 route 2001:db8:acad:3::/64 2001:db8:acad:13::2
+ipv6 route 2001:db8:acad:3::/64 2001:db8:acad:12::2 10</pre></div>
+        <div class="cfg"><div class="dev">R2</div><pre>ipv6 unicast-routing
+interface g0/0
+ ip address 192.168.2.1 255.255.255.0
+ ipv6 address fe80::2 link-local
+ ipv6 address 2001:db8:acad:2::1/64
+ no shutdown
+interface g0/1
+ ip address 10.0.12.2 255.255.255.252
+ ipv6 address fe80::2 link-local
+ ipv6 address 2001:db8:acad:12::2/64
+ no shutdown
+interface g0/2
+ ip address 10.0.23.1 255.255.255.252
+ ipv6 address fe80::2 link-local
+ ipv6 address 2001:db8:acad:23::1/64
+ no shutdown
+ exit
+ip route 192.168.1.0 255.255.255.0 10.0.12.1
+ip route 192.168.3.0 255.255.255.0 10.0.23.2
+ipv6 route 2001:db8:acad:1::/64 2001:db8:acad:12::1
+ipv6 route 2001:db8:acad:3::/64 2001:db8:acad:23::2</pre></div>
+        <div class="cfg"><div class="dev">R3</div><pre>ipv6 unicast-routing
+interface g0/0
+ ip address 192.168.3.1 255.255.255.0
+ ipv6 address fe80::3 link-local
+ ipv6 address 2001:db8:acad:3::1/64
+ no shutdown
+interface g0/1
+ ip address 10.0.13.2 255.255.255.252
+ ipv6 address fe80::3 link-local
+ ipv6 address 2001:db8:acad:13::2/64
+ no shutdown
+interface g0/2
+ ip address 10.0.23.2 255.255.255.252
+ ipv6 address fe80::3 link-local
+ ipv6 address 2001:db8:acad:23::2/64
+ no shutdown
+ exit
+ip route 192.168.1.0 255.255.255.0 10.0.13.1
+ip route 192.168.1.0 255.255.255.0 10.0.23.1 10
+ip route 192.168.2.0 255.255.255.0 10.0.23.1
+ipv6 route 2001:db8:acad:1::/64 2001:db8:acad:13::1
+ipv6 route 2001:db8:acad:1::/64 2001:db8:acad:23::1 10
+ipv6 route 2001:db8:acad:2::/64 2001:db8:acad:23::1</pre></div>
+      </div></details>
+      <label class="done"><input type="checkbox" id="done-6" data-lab="6"> Mark lab complete</label>
+    </div>
+  </details>
+
+  <!-- LAB 7 -->
+  <details class="lab" id="lab-7">
+    <summary><span class="lab-n">LAB 07</span><span class="lab-t"><h3>Single-area OSPFv2 with DR/BDR control</h3><p>Exam topic 3.4 · Router ID, network statements, passive interfaces, reference bandwidth, DR/BDR election, default route propagation · ~60 min</p></span><span class="lab-state" data-state="7"></span></summary>
+    <div class="lab-body">
+      <p><b>Scenario.</b> The company has replaced its static routes with OSPF. Three routers share an Ethernet backbone segment, so a DR and BDR will be elected. R1 is the most powerful router and must be the DR. R1 also connects to the ISP and should advertise the default route to the others.</p>
+      <h4>Topology</h4>
+<pre class="topo">                         [ ISP ]  Lo0 209.165.200.225/27
+                           │ G0/0 203.0.113.1/30
+                           │
+                           │ G0/2 203.0.113.2/30
+  PC1 ──G0/1─[ R1 ]─G0/0───┐
+                           │
+                     [ S1 2960 ]   backbone 10.0.123.0/24 (area 0)
+                       │       │
+                    G0/0       G0/0
+                  [ R2 ]       [ R3 ]
+                    G0/1       G0/1
+                    PC2        PC3</pre>
+      <div class="tbl-wrap"><table class="tbl">
+        <tr><th>Device</th><th>Interface</th><th>IP address / prefix</th><th>Notes</th></tr>
+        <tr><td>R1</td><td>G0/0</td><td>10.0.123.1 /24</td><td>OSPF priority 255, RID 1.1.1.1</td></tr>
+        <tr><td>R1</td><td>G0/1</td><td>192.168.1.1 /24</td><td>passive</td></tr>
+        <tr><td>R1</td><td>G0/2</td><td>203.0.113.2 /30</td><td>not in OSPF</td></tr>
+        <tr><td>R2</td><td>G0/0</td><td>10.0.123.2 /24</td><td>OSPF priority 100, RID 2.2.2.2</td></tr>
+        <tr><td>R2</td><td>G0/1</td><td>192.168.2.1 /24</td><td>passive</td></tr>
+        <tr><td>R3</td><td>G0/0</td><td>10.0.123.3 /24</td><td>default priority, RID 3.3.3.3</td></tr>
+        <tr><td>R3</td><td>G0/1</td><td>192.168.3.1 /24</td><td>passive</td></tr>
+        <tr><td>ISP</td><td>G0/0</td><td>203.0.113.1 /30</td><td>–</td></tr>
+        <tr><td>ISP</td><td>Lo0</td><td>209.165.200.225 /27</td><td>"Internet" test address</td></tr>
+        <tr><td>PC1–PC3</td><td>NIC</td><td>192.168.x.10 /24</td><td>gateway 192.168.x.1</td></tr>
+      </table></div>
+      <h4>Tasks</h4>
+      <ol>
+        <li>Cable and address everything. S1 needs no configuration.</li>
+        <li>On ISP, add static routes back to the company: <code>192.168.0.0/22</code> and <code>10.0.123.0/24</code> via 203.0.113.2.</li>
+        <li>Configure OSPF process 1 on R1–R3 with manual router IDs. Advertise the backbone and LAN networks in area 0 (not the ISP link).</li>
+        <li>Make the LAN interfaces passive.</li>
+        <li>Set the reference bandwidth to 1000 Mbps on all three routers so Gigabit links don't cost the same as FastEthernet.</li>
+        <li>Set OSPF priorities so R1 is DR and R2 is BDR. DR elections are not preemptive: run <code>clear ip ospf process</code> (answer <i>yes</i>) on all three routers within a few seconds of each other.</li>
+        <li>On R1 add a default static route to the ISP and advertise it into OSPF with <code>default-information originate</code>.</li>
+        <li><b>Challenge:</b> set R3's priority to 0 and confirm it can never become DR or BDR, even if you reset the other routers.</li>
+      </ol>
+      <h4>Verify</h4>
+      <ul>
+        <li>R1 <code>show ip ospf neighbor</code>: 2.2.2.2 FULL/BDR and 3.3.3.3 FULL/DROTHER.</li>
+        <li><code>show ip ospf interface g0/0</code> on R3: State DROTHER, Designated Router 1.1.1.1, Backup 2.2.2.2, Hello 10, Dead 40.</li>
+        <li>R2 <code>show ip route ospf</code>: <code>O 192.168.1.0/24 [110/2]</code> (cost 1 + 1 after the reference-bandwidth change) and <code>O*E2 0.0.0.0/0 [110/1] via 10.0.123.1</code>.</li>
+        <li><code>show ip protocols</code>: router ID, networks and passive interfaces.</li>
+        <li>PC2 and PC3 ping 209.165.200.225.</li>
+      </ul>
+      <details class="sol"><summary>Show solution configs</summary><div class="sol-body">
+        <div class="cfg"><div class="dev">R1</div><pre>interface g0/0
+ ip address 10.0.123.1 255.255.255.0
+ ip ospf priority 255
+ no shutdown
+interface g0/1
+ ip address 192.168.1.1 255.255.255.0
+ no shutdown
+interface g0/2
+ ip address 203.0.113.2 255.255.255.252
+ no shutdown
+ exit
+ip route 0.0.0.0 0.0.0.0 203.0.113.1
+router ospf 1
+ router-id 1.1.1.1
+ auto-cost reference-bandwidth 1000
+ network 10.0.123.0 0.0.0.255 area 0
+ network 192.168.1.0 0.0.0.255 area 0
+ passive-interface g0/1
+ default-information originate</pre></div>
+        <div class="cfg"><div class="dev">R2</div><pre>interface g0/0
+ ip address 10.0.123.2 255.255.255.0
+ ip ospf priority 100
+ no shutdown
+interface g0/1
+ ip address 192.168.2.1 255.255.255.0
+ no shutdown
+ exit
+router ospf 1
+ router-id 2.2.2.2
+ auto-cost reference-bandwidth 1000
+ network 10.0.123.0 0.0.0.255 area 0
+ network 192.168.2.0 0.0.0.255 area 0
+ passive-interface g0/1</pre></div>
+        <div class="cfg"><div class="dev">R3</div><pre>interface g0/0
+ ip address 10.0.123.3 255.255.255.0
+ no shutdown
+interface g0/1
+ ip address 192.168.3.1 255.255.255.0
+ no shutdown
+ exit
+router ospf 1
+ router-id 3.3.3.3
+ auto-cost reference-bandwidth 1000
+ network 10.0.123.0 0.0.0.255 area 0
+ network 192.168.3.0 0.0.0.255 area 0
+ passive-interface g0/1
+! Challenge:
+! interface g0/0
+!  ip ospf priority 0</pre></div>
+        <div class="cfg"><div class="dev">ISP</div><pre>interface g0/0
+ ip address 203.0.113.1 255.255.255.252
+ no shutdown
+interface loopback0
+ ip address 209.165.200.225 255.255.255.224
+ exit
+ip route 192.168.0.0 255.255.252.0 203.0.113.2
+ip route 10.0.123.0 255.255.255.0 203.0.113.2</pre></div>
+      </div></details>
+      <label class="done"><input type="checkbox" id="done-7" data-lab="7"> Mark lab complete</label>
+    </div>
+  </details>
+
+  <!-- LAB 8 -->
+  <details class="lab" id="lab-8">
+    <summary><span class="lab-n">LAB 08</span><span class="lab-t"><h3>HSRP gateway redundancy</h3><p>Exam topic 3.5 · HSRPv2 virtual IP, priority, preemption, failover · ~45 min</p></span><span class="lab-state" data-state="8"></span></summary>
+    <div class="lab-body">
+      <p><b>Scenario.</b> Users lose all off-site access whenever their gateway router reboots. Add a second router and run HSRP so the hosts keep one virtual gateway address. R1 should be the active router whenever it is available.</p>
+      <h4>Topology</h4>
+<pre class="topo">                  [ R3 "Core" ]   Lo0 209.165.201.1/27
+                  G0/0       G0/1
+         10.1.1.0/30           10.2.2.0/30
+                G0/1         G0/1
+               [ R1 ]       [ R2 ]
+                G0/0         G0/0
+                   \         /
+                 Fa0/1     Fa0/2
+                   [ S1 2960 ]       LAN 192.168.10.0/24
+                 Fa0/11    Fa0/12    virtual gateway 192.168.10.1
+                   PC1       PC2</pre>
+      <div class="tbl-wrap"><table class="tbl">
+        <tr><th>Device</th><th>Interface</th><th>IP address / prefix</th><th>Notes</th></tr>
+        <tr><td>R1</td><td>G0/0</td><td>192.168.10.2 /24</td><td>HSRP group 1, priority 150, preempt</td></tr>
+        <tr><td>R1</td><td>G0/1</td><td>10.1.1.1 /30</td><td>–</td></tr>
+        <tr><td>R2</td><td>G0/0</td><td>192.168.10.3 /24</td><td>HSRP group 1, priority 100 (default)</td></tr>
+        <tr><td>R2</td><td>G0/1</td><td>10.2.2.1 /30</td><td>–</td></tr>
+        <tr><td>R3</td><td>G0/0</td><td>10.1.1.2 /30</td><td>–</td></tr>
+        <tr><td>R3</td><td>G0/1</td><td>10.2.2.2 /30</td><td>–</td></tr>
+        <tr><td>R3</td><td>Lo0</td><td>209.165.201.1 /27</td><td>test destination</td></tr>
+        <tr><td>Virtual IP</td><td>–</td><td>192.168.10.1</td><td>HSRP group 1</td></tr>
+        <tr><td>PC1</td><td>NIC</td><td>192.168.10.11 /24</td><td>gateway 192.168.10.1</td></tr>
+        <tr><td>PC2</td><td>NIC</td><td>192.168.10.12 /24</td><td>gateway 192.168.10.1</td></tr>
+      </table></div>
+      <h4>Tasks</h4>
+      <ol>
+        <li>Cable and address the topology. Point both PCs at the virtual gateway 192.168.10.1.</li>
+        <li>Run OSPF area 0 on all three routers so the LAN and R3's loopback are reachable. Make G0/0 passive on R1 and R2.</li>
+        <li>Configure HSRP version 2, group 1, virtual IP 192.168.10.1 on R1 and R2.</li>
+        <li>Give R1 priority 150 and enable preemption on R1.</li>
+        <li><b>Failover test:</b> on PC1 run <code>ping -t 209.165.201.1</code>, then shut R1 G0/0. Count the lost replies (HSRP's default hold time is 10 seconds). Then <code>no shutdown</code> R1 G0/0 and watch R1 preempt.</li>
+        <li><b>Question:</b> what would happen in step 5 if preemption were not configured on R1?</li>
+      </ol>
+      <h4>Verify</h4>
+      <ul>
+        <li><code>show standby brief</code> on R1: Grp 1, Pri 150, P (preempt), State Active, Standby 192.168.10.3, Virtual IP 192.168.10.1.</li>
+        <li>PC1 <code>arp -a</code> after pinging the gateway: 192.168.10.1 maps to the HSRPv2 virtual MAC <code>0000.0c9f.f001</code> (HSRPv1 would use 0000.0c07.ac01).</li>
+        <li>PC1 <code>tracert 209.165.201.1</code>: first hop 192.168.10.2 (R1) normally, and 192.168.10.3 (R2) after failover. Traceroute shows the real interface address, not the virtual IP.</li>
+      </ul>
+      <div class="note">R3 learns 192.168.10.0/24 from both R1 and R2 at equal cost, so return traffic may come back through R2 even while R1 is active. That asymmetry is normal: HSRP only controls the hosts' outbound gateway.</div>
+      <details class="sol"><summary>Show solution configs</summary><div class="sol-body">
+        <div class="cfg"><div class="dev">R1</div><pre>interface g0/0
+ ip address 192.168.10.2 255.255.255.0
+ standby version 2
+ standby 1 ip 192.168.10.1
+ standby 1 priority 150
+ standby 1 preempt
+ no shutdown
+interface g0/1
+ ip address 10.1.1.1 255.255.255.252
+ no shutdown
+ exit
+router ospf 1
+ router-id 1.1.1.1
+ network 192.168.10.0 0.0.0.255 area 0
+ network 10.1.1.0 0.0.0.3 area 0
+ passive-interface g0/0</pre></div>
+        <div class="cfg"><div class="dev">R2</div><pre>interface g0/0
+ ip address 192.168.10.3 255.255.255.0
+ standby version 2
+ standby 1 ip 192.168.10.1
+ no shutdown
+interface g0/1
+ ip address 10.2.2.1 255.255.255.252
+ no shutdown
+ exit
+router ospf 1
+ router-id 2.2.2.2
+ network 192.168.10.0 0.0.0.255 area 0
+ network 10.2.2.0 0.0.0.3 area 0
+ passive-interface g0/0</pre></div>
+        <div class="cfg"><div class="dev">R3</div><pre>interface g0/0
+ ip address 10.1.1.2 255.255.255.252
+ no shutdown
+interface g0/1
+ ip address 10.2.2.2 255.255.255.252
+ no shutdown
+interface loopback0
+ ip address 209.165.201.1 255.255.255.224
+ exit
+router ospf 1
+ router-id 3.3.3.3
+ network 10.1.1.0 0.0.0.3 area 0
+ network 10.2.2.0 0.0.0.3 area 0
+ network 209.165.201.0 0.0.0.31 area 0</pre></div>
+        <p class="muted" style="font-size:14px">Answer to step 6: without preemption, R2 stays active after R1 recovers. HSRP preemption is off by default; a higher priority only matters during an election.</p>
+      </div></details>
+      <label class="done"><input type="checkbox" id="done-8" data-lab="8"> Mark lab complete</label>
+    </div>
+  </details>
+
+  <!-- LAB 9 -->
+  <details class="lab" id="lab-9">
+    <summary><span class="lab-n">LAB 09</span><span class="lab-t"><h3>DHCP, relay, NAT/PAT, NTP and Syslog</h3><p>Exam topics 4.1, 4.2, 4.3, 4.5, 4.6 · DHCP server and relay, PAT, static NAT, NTP client, remote syslog · ~75 min</p></span><span class="lab-state" data-state="9"></span></summary>
+    <div class="lab-body">
+      <p><b>Scenario.</b> HQ router R1 must hand out addresses to HQ and to the branch behind R2, translate all private traffic to its one public address, publish the HQ server to the Internet with its own public IP, and send its clock and log messages to the HQ server.</p>
+      <h4>Topology</h4>
+<pre class="topo">  PC1 (DHCP)     Server0 192.168.10.10 (NTP, Syslog)
+      │                │
+      └──[ S1 2960 ]───┘
+             │                       203.0.113.0/29
+          G0/0 192.168.10.1
+          [ R1 HQ ]─G0/2 .2 ─────────── G0/0 .1─[ ISP ]  Lo0 198.51.100.1/24
+          G0/1 10.0.0.1/30
+             │
+          G0/1 10.0.0.2/30
+          [ R2 Branch ]
+          G0/0 192.168.20.1
+             │
+         [ S2 2960 ]── PC2 (DHCP)</pre>
+      <div class="tbl-wrap"><table class="tbl">
+        <tr><th>Device</th><th>Interface</th><th>IP address / mask</th><th>NAT role</th></tr>
+        <tr><td>R1</td><td>G0/0</td><td>192.168.10.1 /24</td><td>inside</td></tr>
+        <tr><td>R1</td><td>G0/1</td><td>10.0.0.1 /30</td><td>inside</td></tr>
+        <tr><td>R1</td><td>G0/2</td><td>203.0.113.2 /29 (255.255.255.248)</td><td>outside</td></tr>
+        <tr><td>R2</td><td>G0/0</td><td>192.168.20.1 /24</td><td>– (DHCP relay)</td></tr>
+        <tr><td>R2</td><td>G0/1</td><td>10.0.0.2 /30</td><td>–</td></tr>
+        <tr><td>ISP</td><td>G0/0</td><td>203.0.113.1 /29</td><td>–</td></tr>
+        <tr><td>ISP</td><td>Lo0</td><td>198.51.100.1 /24</td><td>–</td></tr>
+        <tr><td>Server0</td><td>NIC</td><td>192.168.10.10 /24, gw .1</td><td>static NAT → 203.0.113.5</td></tr>
+        <tr><td>PC1, PC2</td><td>NIC</td><td>DHCP</td><td>PAT</td></tr>
+      </table></div>
+      <h4>Tasks</h4>
+      <ol>
+        <li>Cable and address the routers and Server0. Add static routes: R1 to 192.168.20.0/24 via R2, R1 default route to the ISP, and R2 default route to R1. The ISP gets no routes to private networks.</li>
+        <li>On R1, exclude .1–.20 in each LAN and create DHCP pools <code>LAN10</code> and <code>LAN20</code> with default router and DNS server 192.168.10.10.</li>
+        <li>On R2 G0/0 configure <code>ip helper-address 10.0.0.1</code> so branch DHCP broadcasts are relayed to R1.</li>
+        <li>Set PC1 and PC2 to DHCP and confirm they receive addresses from .21 upward.</li>
+        <li>Configure PAT on R1 for both LANs using G0/2's address. Add static NAT mapping Server0 to 203.0.113.5.</li>
+        <li>On Server0 › Services, turn <b>NTP</b> and <b>SYSLOG</b> on (leave DHCP off). Point R1 and R2 at 192.168.10.10 for NTP.</li>
+        <li>On R1 enable millisecond log timestamps and send logs to 192.168.10.10. Create and then shut down a loopback interface to generate messages.</li>
+      </ol>
+      <h4>Verify</h4>
+      <ul>
+        <li><code>show ip dhcp binding</code> on R1 lists both PCs. <code>ipconfig</code> on PC2 shows gateway 192.168.20.1.</li>
+        <li>PC1 and PC2 ping 198.51.100.1. <code>show ip nat translations</code> shows inside local 192.168.x.x mapped to inside global 203.0.113.2 with different ports.</li>
+        <li>From the ISP, <code>ping 203.0.113.5</code> succeeds (static NAT to Server0), while <code>ping 192.168.10.10</code> fails because the ISP has no route to private space.</li>
+        <li><code>show ip nat statistics</code> lists the inside and outside interfaces and hit counts.</li>
+        <li><code>show ntp status</code> eventually reports "Clock is synchronized" (it can take a minute) and <code>show clock</code> matches Server0.</li>
+        <li>Server0 › Services › SYSLOG shows R1's %LINK and %LINEPROTO messages.</li>
+      </ul>
+      <div class="note">Older Packet Tracer versions accept only <code>logging 192.168.10.10</code> instead of <code>logging host 192.168.10.10</code>. Both send logs to the same server.</div>
+      <details class="sol"><summary>Show solution configs</summary><div class="sol-body">
+        <div class="cfg"><div class="dev">R1</div><pre>interface g0/0
+ ip address 192.168.10.1 255.255.255.0
+ ip nat inside
+ no shutdown
+interface g0/1
+ ip address 10.0.0.1 255.255.255.252
+ ip nat inside
+ no shutdown
+interface g0/2
+ ip address 203.0.113.2 255.255.255.248
+ ip nat outside
+ no shutdown
+ exit
+ip route 192.168.20.0 255.255.255.0 10.0.0.2
+ip route 0.0.0.0 0.0.0.0 203.0.113.1
+!
+ip dhcp excluded-address 192.168.10.1 192.168.10.20
+ip dhcp excluded-address 192.168.20.1 192.168.20.20
+ip dhcp pool LAN10
+ network 192.168.10.0 255.255.255.0
+ default-router 192.168.10.1
+ dns-server 192.168.10.10
+ip dhcp pool LAN20
+ network 192.168.20.0 255.255.255.0
+ default-router 192.168.20.1
+ dns-server 192.168.10.10
+ exit
+!
+access-list 1 permit 192.168.10.0 0.0.0.255
+access-list 1 permit 192.168.20.0 0.0.0.255
+ip nat inside source list 1 interface g0/2 overload
+ip nat inside source static 192.168.10.10 203.0.113.5
+!
+ntp server 192.168.10.10
+service timestamps log datetime msec
+logging host 192.168.10.10
+interface loopback 1
+ ip address 1.1.1.1 255.255.255.255
+ shutdown</pre></div>
+        <div class="cfg"><div class="dev">R2</div><pre>interface g0/0
+ ip address 192.168.20.1 255.255.255.0
+ ip helper-address 10.0.0.1
+ no shutdown
+interface g0/1
+ ip address 10.0.0.2 255.255.255.252
+ no shutdown
+ exit
+ip route 0.0.0.0 0.0.0.0 10.0.0.1
+ntp server 192.168.10.10</pre></div>
+        <div class="cfg"><div class="dev">ISP</div><pre>interface g0/0
+ ip address 203.0.113.1 255.255.255.248
+ no shutdown
+interface loopback0
+ ip address 198.51.100.1 255.255.255.0</pre></div>
+        <p class="muted" style="font-size:14px">Why R1 can serve the branch pool: the relay fills in the <i>giaddr</i> field with 192.168.20.1. R1 picks the pool whose network contains that address and unicasts the reply back to R2, which is why R1 needs its route to 192.168.20.0/24.</p>
+      </div></details>
+      <label class="done"><input type="checkbox" id="done-9" data-lab="9"> Mark lab complete</label>
+    </div>
+  </details>
+
+  <!-- LAB 10 -->
+  <details class="lab" id="lab-10">
+    <summary><span class="lab-n">LAB 10</span><span class="lab-t"><h3>Layer 2 security and ACLs</h3><p>Exam topics 5.3, 5.6, 5.7 · DHCP snooping, port security, VTY access-class, named extended ACL · ~75 min</p></span><span class="lab-state" data-state="10"></span></summary>
+    <div class="lab-body">
+      <p><b>Scenario.</b> An audit found three problems: someone plugged a home router into the office network and handed out bad DHCP leases, people swap unknown laptops into desk ports, and every user can reach every service on the server subnet. Fix all three, and allow only the admin workstation to manage R1.</p>
+      <h4>Topology</h4>
+<pre class="topo">  PC1        PC2        Admin           RogueDHCP (Server-PT)
+  Fa0/1      Fa0/2      Fa0/3           Fa0/10
+     \         |          |              /
+      └────────[    S1 2960    ]────────┘
+                    Gi0/1
+                      │
+                   G0/0 192.168.10.1
+                   [ R1 ]
+                   G0/1 192.168.50.1
+                      │
+                   Server0 192.168.50.10 (HTTP, HTTPS, FTP)</pre>
+      <div class="tbl-wrap"><table class="tbl">
+        <tr><th>Device</th><th>Interface</th><th>IP address / prefix</th><th>Default gateway</th></tr>
+        <tr><td>R1</td><td>G0/0</td><td>192.168.10.1 /24</td><td>–</td></tr>
+        <tr><td>R1</td><td>G0/1</td><td>192.168.50.1 /24</td><td>–</td></tr>
+        <tr><td>Server0</td><td>NIC</td><td>192.168.50.10 /24</td><td>192.168.50.1</td></tr>
+        <tr><td>Admin</td><td>NIC</td><td>192.168.10.5 /24 (static)</td><td>192.168.10.1</td></tr>
+        <tr><td>PC1, PC2</td><td>NIC</td><td>DHCP from R1</td><td>from DHCP</td></tr>
+        <tr><td>RogueDHCP</td><td>NIC</td><td>192.168.10.200 /24</td><td>–</td></tr>
+      </table></div>
+      <h4>Tasks</h4>
+      <ol>
+        <li>Cable and address the devices. On R1 create DHCP pool <code>LAN</code> for 192.168.10.0/24 (exclude .1–.20, default router .1). Configure SSH on R1 as in Lab 1 with user <code>admin</code>.</li>
+        <li><b>Simulate the attack:</b> on RogueDHCP › Services › DHCP, turn the service on with gateway 192.168.10.200 and start address 192.168.10.150, then click Save. Renew DHCP on PC1 a few times. Some leases may come from the rogue server.</li>
+        <li>Enable DHCP snooping on S1 for VLAN 1, trust only Gi0/1 (toward R1), and disable option 82 insertion. Renew PC1 and PC2: only R1's leases should arrive now.</li>
+        <li>On Fa0/1–3 enable port security: one MAC address, sticky learning. Fa0/1–2 use the default <i>shutdown</i> violation mode. Fa0/3 uses <i>restrict</i>.</li>
+        <li><b>Test port security:</b> ping from PC2 so its MAC is learned, then remove PC2's cable, connect a new laptop to Fa0/2 and ping. Fa0/2 should go err-disabled. Reconnect PC2 and recover with <code>shutdown</code> / <code>no shutdown</code>.</li>
+        <li>Create standard named ACL <code>VTY-ADMIN</code> that permits only 192.168.10.5, and apply it to R1's VTY lines with <code>access-class</code>.</li>
+        <li>Create extended named ACL <code>LAN-TO-SRV</code>: LAN hosts may reach Server0 only with HTTP, HTTPS and ping; all other LAN traffic to 192.168.50.0/24 is denied; everything else is permitted. Apply it as close to the source as possible.</li>
+      </ol>
+      <h4>Verify</h4>
+      <ul>
+        <li><code>show ip dhcp snooping</code> shows snooping enabled on VLAN 1 with Gi0/1 trusted. <code>show ip dhcp snooping binding</code> lists the PCs' leases.</li>
+        <li><code>show port-security interface fa0/2</code> reports Secure-shutdown after the test, with a violation count of 1. <code>show port-security address</code> lists the sticky MACs.</li>
+        <li>Admin <code>ssh -l admin 192.168.10.1</code> works; the same command from PC1 is refused.</li>
+        <li>PC1 › Web Browser › <code>http://192.168.50.10</code> loads. PC1 pings 192.168.50.10. PC1 <code>ftp 192.168.50.10</code> fails.</li>
+        <li><code>show access-lists</code> shows match counters increasing on each line you tested.</li>
+      </ul>
+      <div class="note">Why disable option 82: with snooping on, the switch inserts option 82 with a giaddr of 0.0.0.0. A Cisco IOS DHCP server drops such requests by default, so clients get no lease. <code>no ip dhcp snooping information option</code> on the switch avoids that.</div>
+      <details class="sol"><summary>Show solution configs</summary><div class="sol-body">
+        <div class="cfg"><div class="dev">S1</div><pre>ip dhcp snooping
+ip dhcp snooping vlan 1
+no ip dhcp snooping information option
+interface g0/1
+ ip dhcp snooping trust
+interface range fa0/1 - 3
+ switchport mode access
+ switchport port-security
+ switchport port-security maximum 1
+ switchport port-security mac-address sticky
+ switchport port-security violation shutdown
+interface fa0/3
+ switchport port-security violation restrict</pre></div>
+        <div class="cfg"><div class="dev">R1</div><pre>hostname R1
+interface g0/0
+ ip address 192.168.10.1 255.255.255.0
+ no shutdown
+interface g0/1
+ ip address 192.168.50.1 255.255.255.0
+ no shutdown
+ exit
+ip dhcp excluded-address 192.168.10.1 192.168.10.20
+ip dhcp pool LAN
+ network 192.168.10.0 255.255.255.0
+ default-router 192.168.10.1
+ exit
+! SSH (as in Lab 1)
+ip domain-name ccna.lab
+username admin privilege 15 secret Admin12345
+crypto key generate rsa
+  ! How many bits in the modulus [512]: 1024
+ip ssh version 2
+!
+ip access-list standard VTY-ADMIN
+ permit host 192.168.10.5
+ exit
+line vty 0 4
+ login local
+ transport input ssh
+ access-class VTY-ADMIN in
+ exit
+!
+ip access-list extended LAN-TO-SRV
+ permit tcp 192.168.10.0 0.0.0.255 host 192.168.50.10 eq www
+ permit tcp 192.168.10.0 0.0.0.255 host 192.168.50.10 eq 443
+ permit icmp 192.168.10.0 0.0.0.255 host 192.168.50.10 echo
+ deny ip 192.168.10.0 0.0.0.255 192.168.50.0 0.0.0.255
+ permit ip any any
+ exit
+interface g0/0
+ ip access-group LAN-TO-SRV in</pre></div>
+        <p class="muted" style="font-size:14px">Placement: the extended ACL goes inbound on G0/0, closest to the LAN sources. Echo replies from Server0 are not affected because the ACL filters only traffic entering G0/0. The final <code>permit ip any any</code> keeps DHCP, SSH to R1 and other traffic working; without it, the implicit deny would block everything else.</p>
+      </div></details>
+      <label class="done"><input type="checkbox" id="done-10" data-lab="10"> Mark lab complete</label>
+    </div>
+  </details>
+
+  <!-- LAB 11 -->
+  <details class="lab" id="lab-11">
+    <summary><span class="lab-n">LAB 11</span><span class="lab-t"><h3>Wireless LAN controller and WPA2-PSK WLAN</h3><p>Exam topics 2.6, 2.7, 2.9, 5.10 · WLC management, lightweight APs and CAPWAP, dynamic interfaces, WLAN creation in the GUI, WPA2-PSK, QoS profiles · ~75 min</p></span><span class="lab-state" data-state="11"></span></summary>
+    <div class="lab-body">
+      <p><b>Scenario.</b> The office is replacing its standalone home-style access points with a centrally managed wireless network. Two lightweight APs must join a Cisco 3504 WLC, and employees must connect to a WPA2-protected SSID that places them in their own VLAN, separate from the management network the APs and the controller use.</p>
+      <h4>Topology</h4>
+<pre class="topo">                       [ R1 2911 ]  router-on-a-stick, DHCP server
+                          G0/0  (.99 native, .30)
+                            │ 802.1Q trunk
+                          Gi0/1
+   Admin PC ──Fa0/10─[ SW1 3560-24PS (PoE) ]─Gi0/2══ trunk ══ Gi1 [ WLC-3504 ]
+                       Fa0/1          Fa0/2                     mgmt 192.168.99.10
+                         │              │
+                     [ AP1 3702i ]  [ AP2 3702i ]   access ports, VLAN 99
+                         )))            )))
+                     Laptop1        Laptop2         SSID CORP-WIFI → VLAN 30</pre>
+      <div class="tbl-wrap"><table class="tbl">
+        <tr><th>VLAN</th><th>Name</th><th>Subnet</th><th>Used by</th></tr>
+        <tr><td>99</td><td>MGMT</td><td>192.168.99.0 /24</td><td>WLC management, APs, admin PC (native VLAN on trunks)</td></tr>
+        <tr><td>30</td><td>WIFI-USERS</td><td>192.168.30.0 /24</td><td>Wireless clients on CORP-WIFI</td></tr>
+      </table></div>
+      <div class="tbl-wrap"><table class="tbl">
+        <tr><th>Device</th><th>Interface</th><th>IP address / prefix</th><th>Gateway / notes</th></tr>
+        <tr><td>R1</td><td>G0/0.99 (native)</td><td>192.168.99.1 /24</td><td>DHCP pool MGMT</td></tr>
+        <tr><td>R1</td><td>G0/0.30</td><td>192.168.30.1 /24</td><td>DHCP pool WIFI</td></tr>
+        <tr><td>WLC</td><td>management (untagged)</td><td>192.168.99.10 /24</td><td>gw 192.168.99.1</td></tr>
+        <tr><td>WLC</td><td>dynamic "wifi-users", VLAN 30</td><td>192.168.30.2 /24</td><td>gw 192.168.30.1, DHCP server 192.168.30.1</td></tr>
+        <tr><td>Admin PC</td><td>NIC</td><td>192.168.99.15 /24 (static)</td><td>gw 192.168.99.1</td></tr>
+        <tr><td>AP1, AP2</td><td>G0</td><td>DHCP (192.168.99.21+)</td><td>from pool MGMT</td></tr>
+        <tr><td>Laptop1, 2</td><td>Wireless0</td><td>DHCP (192.168.30.21+)</td><td>from pool WIFI</td></tr>
+      </table></div>
+      <div class="note">Packet Tracer setup: the 3560-24PS supplies PoE to the 3702i APs. If an AP stays dark, open it › Physical and plug in its power adapter. For the laptops, open Physical, power the laptop off, drag out the wired module (PT-LAPTOP-NM-1CFE), drag in <b>WPC300N</b>, then power it back on.</div>
+      <h4>Tasks</h4>
+      <ol>
+        <li><b>Wired side.</b> On SW1 create VLANs 30 and 99. Make Gi0/1 (to R1) and Gi0/2 (to the WLC) 802.1Q trunks with native VLAN 99, allowing VLANs 30 and 99. The 3560 also supports ISL, so set <code>switchport trunk encapsulation dot1q</code> before <code>switchport mode trunk</code>. Put Fa0/1, Fa0/2 and Fa0/10 in VLAN 99 as access ports.</li>
+        <li>On R1 configure subinterfaces G0/0.99 (native) and G0/0.30, and DHCP pools <code>MGMT</code> and <code>WIFI</code> with .1–.20 excluded in each.</li>
+        <li><b>WLC management.</b> Open WLC › Config and set the management interface to 192.168.99.10/24, gateway 192.168.99.1. From the Admin PC › Web Browser, browse to <code>https://192.168.99.10</code> (some PT versions use <code>http://</code>). Create the admin account when prompted (for example <code>admin</code> / <code>Cisco12345</code>) and log in.</li>
+        <li><b>AP join.</b> Connect and power the APs. They take a DHCP address in VLAN 99, find the WLC with a CAPWAP discovery broadcast on that subnet, and join it. Check <b>Wireless › All APs</b>; both APs should be listed, in <b>Local</b> mode.</li>
+        <li><b>Dynamic interface.</b> Controller › Interfaces › New: name <code>wifi-users</code>, VLAN 30. Set port 1, IP 192.168.30.2, mask 255.255.255.0, gateway 192.168.30.1, primary DHCP server 192.168.30.1. Apply.</li>
+        <li><b>WLAN.</b> WLANs › Create New › Go: type WLAN, profile name <code>CORP</code>, SSID <code>CORP-WIFI</code>, ID 1.
+          <ul>
+            <li>General tab: Status <b>Enabled</b>, Interface <code>wifi-users</code>.</li>
+            <li>Security › Layer 2: <b>WPA+WPA2</b>, WPA2 Policy with <b>AES</b> encryption, Authentication Key Management <b>PSK</b>, PSK format ASCII, passphrase <code>CorpWifi2026!</code>. Apply.</li>
+          </ul>
+        </li>
+        <li><b>Clients.</b> On each laptop, open Desktop › PC Wireless (or Config › Wireless0), connect to CORP-WIFI with WPA2-Personal and the passphrase, and use DHCP.</li>
+        <li><b>Interpret the GUI.</b> Open the WLAN's QoS and Advanced tabs without changing them, and answer: which QoS profile is the default, which one you would choose for a voice SSID, and what "Allow AAA Override" and "FlexConnect Local Switching" would do.</li>
+      </ol>
+      <h4>Verify</h4>
+      <ul>
+        <li>R1 <code>show ip dhcp binding</code> lists both APs in 192.168.99.0/24 and both laptops in 192.168.30.0/24.</li>
+        <li>SW1 <code>show cdp neighbors</code> shows the APs on Fa0/1 and Fa0/2. <code>show interfaces trunk</code> shows Gi0/1 and Gi0/2 with native VLAN 99 and VLANs 30 and 99 active.</li>
+        <li>WLC GUI: Wireless › All APs shows AP1 and AP2 joined. Monitor › Clients (or WLANs › CORP) shows the laptops associated to CORP-WIFI.</li>
+        <li>Laptop1 <code>ipconfig</code> shows a 192.168.30.x address with gateway 192.168.30.1. It pings 192.168.30.1, Laptop2 and the Admin PC (routed between VLANs by R1).</li>
+        <li>A laptop configured with the wrong passphrase fails to associate.</li>
+      </ul>
+      <div class="note">If your Packet Tracer version won't pass client traffic on the VLAN 30 dynamic interface, map the WLAN to the <b>management</b> interface instead (General tab). Clients then get 192.168.99.x addresses. The lab still works, but user and management traffic share a subnet, which you wouldn't do in production.</div>
+      <details class="sol"><summary>Show solution configs and answers</summary><div class="sol-body">
+        <div class="cfg"><div class="dev">SW1 (3560-24PS)</div><pre>vlan 30
+ name WIFI-USERS
+vlan 99
+ name MGMT
+ exit
+interface range g0/1 - 2
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ switchport trunk native vlan 99
+ switchport trunk allowed vlan 30,99
+interface range fa0/1 - 2 , fa0/10
+ switchport mode access
+ switchport access vlan 99
+ spanning-tree portfast</pre></div>
+        <div class="cfg"><div class="dev">R1</div><pre>interface g0/0
+ no shutdown
+interface g0/0.99
+ encapsulation dot1Q 99 native
+ ip address 192.168.99.1 255.255.255.0
+interface g0/0.30
+ encapsulation dot1Q 30
+ ip address 192.168.30.1 255.255.255.0
+ exit
+ip dhcp excluded-address 192.168.99.1 192.168.99.20
+ip dhcp excluded-address 192.168.30.1 192.168.30.20
+ip dhcp pool MGMT
+ network 192.168.99.0 255.255.255.0
+ default-router 192.168.99.1
+ ! Optional: tell APs where the WLC is (needed when APs and WLC are on different subnets)
+ ! option 43 hex f104c0a8630a
+ip dhcp pool WIFI
+ network 192.168.30.0 255.255.255.0
+ default-router 192.168.30.1</pre></div>
+        <div class="cfg"><div class="dev">WLC-3504 (GUI summary)</div><pre>Management interface : 192.168.99.10 /24, gw 192.168.99.1, VLAN 0 (untagged = native 99)
+Controller > Interfaces > New
+  Name wifi-users, VLAN 30, Port 1
+  IP 192.168.30.2 /24, Gateway 192.168.30.1, Primary DHCP 192.168.30.1
+WLANs > Create New
+  Type WLAN, Profile CORP, SSID CORP-WIFI, ID 1
+  General : Status Enabled, Interface wifi-users
+  Security > Layer 2 : WPA+WPA2, WPA2 Policy, AES, Auth Key Mgmt PSK
+                       PSK (ASCII) CorpWifi2026!</pre></div>
+        <p class="muted" style="font-size:14px"><b>Option 43:</b> <code>f1</code> is the type, <code>04</code> the length (4 bytes per controller), and <code>c0a8630a</code> is 192.168.99.10 in hex (c0 = 192, a8 = 168, 63 = 99, 0a = 10).</p>
+        <p class="muted" style="font-size:14px"><b>GUI answers:</b> the default QoS profile is <b>Silver</b> (best effort). Use <b>Platinum</b> for voice; Gold is for video and Bronze for background traffic. <b>Allow AAA Override</b> lets a RADIUS server assign per-user settings such as the VLAN or ACL. <b>FlexConnect Local Switching</b> lets a FlexConnect AP switch client traffic onto its local wired network instead of tunneling it to the WLC.</p>
+        <p class="muted" style="font-size:14px"><b>Why the APs use access ports:</b> in Local mode, client traffic is tunneled to the WLC inside CAPWAP, so the AP needs only its management VLAN. The WLC uplink is a trunk because the WLC hands client traffic to the wired network on VLAN 30. A FlexConnect AP doing local switching would need a trunk instead. To bundle several WLC ports with LAG, the switch side must use EtherChannel <code>mode on</code>, since the WLC doesn't negotiate LACP or PAgP.</p>
+      </div></details>
+      <label class="done"><input type="checkbox" id="done-11" data-lab="11"> Mark lab complete</label>
+    </div>
+  </details>
+</section>
+
+</div></main>
+
+<script>
+const DOMAINS = [
+  {id:"nf",  name:"Network Fundamentals", w:20},
+  {id:"na",  name:"Network Access", w:20},
+  {id:"ipc", name:"IP Connectivity", w:25},
+  {id:"ips", name:"IP Services", w:10},
+  {id:"sec", name:"Security Fundamentals", w:15},
+  {id:"auto",name:"Automation & Programmability", w:10}
+];
+const DNAME = Object.fromEntries(DOMAINS.map(d=>[d.id,d.name]));
+
+/* ---------------- PRACTICE EXAM (50) ---------------- */
+const EXAM = [
+{d:"nf",q:`A host is configured with 172.16.45.130/26. What is the broadcast address of its subnet?`,o:[`172.16.45.127`,`172.16.45.191`,`172.16.45.192`,`172.16.45.255`],a:[1],e:`/26 = 255.255.255.192, a block size of 64 in the fourth octet. The subnets are .0, .64, .128 and .192. Address .130 is in 172.16.45.128/26, whose broadcast is the address just before the next subnet: .191.`},
+{d:"nf",q:`How many usable host addresses does a /27 subnet provide?`,o:[`14`,`30`,`32`,`62`],a:[1],e:`A /27 leaves 5 host bits: 2^5 = 32 addresses, minus the network and broadcast addresses = 30 usable.`},
+{d:"nf",q:`Which IPv6 address type is created automatically on every IPv6-enabled interface and begins with FE80::/10?`,o:[`Global unicast`,`Unique local`,`Link-local`,`Multicast`],a:[2],e:`Link-local addresses (FE80::/10) are valid only on the local link. They are used for Neighbor Discovery and as the next hop learned by routing protocols. Unique local is FC00::/7, multicast is FF00::/8, and global unicast is currently allocated from 2000::/3.`},
+{d:"nf",q:`What is the correctly compressed form of 2001:0DB8:0000:0000:0000:0A00:0000:0001?`,o:[`2001:DB8::A00::1`,`2001:DB8::A:0:1`,`2001:DB8::A00:0:1`,`2001:DB8:0::A00:1`],a:[2],e:`Drop leading zeros in each hextet (0DB8 → DB8, 0A00 → A00, 0001 → 1). Trailing zeros, like those in A00, must stay. Then replace the longest run of all-zero hextets (three here) with ::, which may be used only once.`},
+{d:"nf",q:`Which two protocols use UDP as their transport by default?`,o:[`SSH`,`TFTP`,`HTTP`,`SNMP`,`FTP`],a:[1,3],e:`TFTP uses UDP 69 and SNMP uses UDP 161 (traps use 162). SSH (22), HTTP (80) and FTP (20/21) use TCP.`},
+{d:"nf",q:`A switch receives a unicast frame whose destination MAC address is not in its MAC address table. What does the switch do?`,o:[`Drops the frame`,`Floods the frame out all ports in the same VLAN except the port it arrived on`,`Sends the frame only out its trunk ports`,`Sends an ARP request for the destination MAC`],a:[1],e:`Unknown unicast frames are flooded within the VLAN, except out the ingress port. When the destination replies, the switch learns its MAC from the source address and forwards later frames out a single port. Switches don't ARP for MAC addresses; ARP resolves IP to MAC on hosts and routers.`},
+{d:"nf",q:`Which set of 2.4 GHz channels is non-overlapping in North America?`,o:[`1, 5, 9`,`1, 6, 11`,`2, 7, 12`,`1, 7, 13`],a:[1],e:`2.4 GHz channel centers are 5 MHz apart but each channel is about 22 MHz wide, so only 1, 6 and 11 don't overlap within the FCC's channels 1–11.`},
+{d:"nf",q:`Which statement describes a collapsed core architecture?`,o:[`The access and distribution layers are combined`,`The core and distribution layers are combined into one layer`,`All three layers run in a single switch`,`The core layer is replaced by a WAN cloud`],a:[1],e:`A two-tier (collapsed core) design merges the core and distribution layers, leaving an access layer plus a combined core/distribution layer. It suits small and medium campuses that don't need a separate core.`},
+{d:"nf",q:`Which address is a private RFC 1918 address?`,o:[`172.32.1.1`,`169.254.10.10`,`192.169.1.1`,`172.31.255.10`],a:[3],e:`RFC 1918 ranges are 10.0.0.0/8, 172.16.0.0/12 (172.16.0.0–172.31.255.255) and 192.168.0.0/16. 169.254.0.0/16 is APIPA (IPv4 link-local), not RFC 1918.`},
+{d:"nf",q:`What is a characteristic of a Type 1 hypervisor?`,o:[`It runs as an application on top of a host operating system`,`It runs directly on the server hardware (bare metal)`,`It can run only one virtual machine`,`It is used only in public clouds`],a:[1],e:`Type 1 (bare-metal) hypervisors such as VMware ESXi run directly on the hardware. Type 2 hypervisors such as VirtualBox run as an application on a host OS.`},
+
+{d:"na",q:`Which statement about the 802.1Q native VLAN is true?`,o:[`Frames in the native VLAN are sent untagged across the trunk`,`The native VLAN must always be VLAN 1`,`Frames in the native VLAN are tagged with priority 7`,`The native VLAN carries only CDP traffic`],a:[0],e:`802.1Q sends native-VLAN frames untagged, and untagged frames received on a trunk are placed in the native VLAN. It defaults to VLAN 1 but can (and should) be changed, and it must match on both ends of the trunk.`},
+{d:"na",q:`An engineer wants a trunk to carry only VLANs 10 and 20. Which interface command does this?`,o:[`switchport trunk native vlan 10,20`,`switchport trunk allowed vlan 10,20`,`switchport access vlan 10,20`,`switchport trunk allowed vlan add 10,20`],a:[1],e:`"switchport trunk allowed vlan 10,20" replaces the allowed list with exactly those VLANs. The "add" keyword appends to the existing list, which allows all VLANs (1–4094) by default.`},
+{d:"na",q:`Two connected switch ports are both set to "switchport mode dynamic auto". What is the result?`,o:[`The link becomes a trunk`,`The link operates as an access link`,`Both ports are err-disabled`,`The ports negotiate an EtherChannel`],a:[1],e:`Dynamic auto only answers DTP requests; it never initiates them. With both sides passive, no trunk forms and the link is an access link. A trunk forms with auto + desirable, desirable + desirable, or trunk on either side (as long as the other side isn't access).`},
+{d:"na",q:`Three switches run PVST+ in VLAN 1. Which switch becomes the root bridge?`,c:`SW1: priority 32769, MAC 0011.1111.1111\nSW2: priority 24577, MAC 00AA.0000.0001\nSW3: priority 24577, MAC 0022.0000.0002`,o:[`SW1`,`SW2`,`SW3`,`No root; the priorities conflict`],a:[2],e:`The lowest bridge ID wins. The bridge ID is the priority (which includes the VLAN number through the extended system ID: 24576 + 1 = 24577), then the MAC. SW2 and SW3 tie on priority, so the lower MAC wins: 0022.0000.0002 (SW3). SW1 has the lowest MAC overall, but priority is compared first.`},
+{d:"na",q:`Which RSTP port state replaces the 802.1D disabled, blocking and listening states?`,o:[`Learning`,`Discarding`,`Forwarding`,`Alternate`],a:[1],e:`RSTP has three port states: discarding, learning and forwarding. "Alternate" is a port role, not a state.`},
+{d:"na",q:`Which feature err-disables a PortFast-enabled access port if it receives a BPDU?`,o:[`Root Guard`,`Loop Guard`,`BPDU Guard`,`BPDU Filter`],a:[2],e:`BPDU Guard err-disables the port as soon as any BPDU arrives, protecting against switches plugged into edge ports. Root Guard puts a port in root-inconsistent (blocking) state only when it receives a superior BPDU. BPDU Filter stops sending and processing BPDUs.`},
+{d:"na",q:`Which LACP mode combination successfully forms an EtherChannel?`,o:[`passive / passive`,`on / active`,`active / passive`,`on / passive`],a:[2],e:`LACP needs at least one side in active mode: active/active or active/passive. Passive/passive never starts negotiation, and "on" doesn't negotiate at all, so it works only with "on" at the other end.`},
+{d:"na",q:`Which global command enables LLDP on a Cisco IOS switch?`,o:[`lldp enable`,`lldp run`,`cdp run lldp`,`feature lldp`],a:[1],e:`"lldp run" enables LLDP globally; it is off by default on Catalyst IOS. Per interface, use "lldp transmit" and "lldp receive". LLDP (IEEE 802.1AB) is the vendor-neutral counterpart of Cisco's CDP. "feature lldp" is NX-OS syntax.`},
+{d:"na",q:`In a split-MAC architecture, which protocol does a lightweight AP use to communicate with its WLC?`,o:[`LWAPP over TCP`,`CAPWAP`,`GRE`,`802.1X`],a:[1],e:`CAPWAP builds a DTLS-encrypted control tunnel (UDP 5246) and a data tunnel (UDP 5247) between the lightweight AP and the WLC.`},
+{d:"na",q:`An IP phone and a PC share switch port Fa0/5. Data must use VLAN 10 and voice must use VLAN 150. Which configuration is correct?`,o:[`switchport mode trunk / switchport trunk allowed vlan 10,150`,`switchport mode access / switchport access vlan 10 / switchport voice vlan 150`,`switchport mode access / switchport access vlan 150 / switchport voice vlan 10`,`switchport voice vlan 10,150`],a:[1],e:`The port stays an access port in the PC's data VLAN. "switchport voice vlan 150" tells the phone (through CDP or LLDP) to tag its voice traffic with VLAN 150.`},
+
+{d:"ipc",q:`A router learns 10.1.1.0/24 from EIGRP (internal), OSPF and RIPv2. With default settings, which route is installed?`,o:[`RIPv2, because it has the lowest hop count`,`OSPF, because it has the lowest cost`,`EIGRP, because it has the lowest administrative distance`,`All three, for load balancing`],a:[2],e:`For the same prefix from different sources, the lowest administrative distance wins: EIGRP internal 90, OSPF 110, RIP 120. Metrics are compared only between routes from the same protocol.`},
+{d:"ipc",q:`A router has the routes below. Which next hop is used for a packet destined to 10.1.1.70?`,c:`S    10.1.1.0/24 [1/0] via 192.168.0.1\nS    10.1.1.64/26 [1/0] via 192.168.0.2\nS    10.1.1.64/27 [1/0] via 192.168.0.3\nS*   0.0.0.0/0 [1/0] via 192.168.0.4`,o:[`192.168.0.1`,`192.168.0.2`,`192.168.0.3`,`192.168.0.4`],a:[2],e:`The first three routes all match, so the longest prefix wins. 10.1.1.64/27 covers .64–.95, which includes .70, so the packet goes to 192.168.0.3.`},
+{d:"ipc",q:`What is the purpose of this command?`,c:`ip route 0.0.0.0 0.0.0.0 203.0.113.1 200`,o:[`It creates a default route preferred over all dynamic routes`,`It creates a floating static default route used only if a better default route is lost`,`It load-balances default traffic across 200 paths`,`It sets the route metric to 200`],a:[1],e:`The last number is the administrative distance. At AD 200 it loses to a default route learned from OSPF (110), EIGRP (90 or 170) or a normal static route (1), so it enters the routing table only as a backup when the preferred route disappears.`},
+{d:"ipc",q:`In what order does a router choose its OSPF router ID?`,o:[`Highest physical IP, highest loopback IP, manual router-id`,`Manual router-id, highest loopback IP, highest active physical interface IP`,`Lowest loopback IP, manual router-id, lowest physical IP`,`Manual router-id, lowest MAC address, highest loopback IP`],a:[1],e:`OSPF uses the "router-id" command first. Without it, it uses the highest IPv4 address on an up loopback, and if there is none, the highest IPv4 address on an active non-loopback interface.`},
+{d:"ipc",q:`Which two parameters must match for two OSPFv2 routers on the same subnet to become neighbors?`,o:[`Process ID`,`Hello and dead intervals`,`Router ID`,`Area ID`,`Interface priority`],a:[1,3],e:`Neighbors must agree on area ID, hello/dead timers, subnet and mask, authentication and stub flags (and MTU to reach FULL). The process ID is locally significant, router IDs must be unique rather than equal, and priority only affects the DR/BDR election.`},
+{d:"ipc",q:`Three routers start OSPF at the same time on one Ethernet segment. Which router becomes the DR?`,c:`R1: priority 1, router ID 1.1.1.1\nR2: priority 0, router ID 9.9.9.9\nR3: priority 1, router ID 3.3.3.3`,o:[`R1`,`R2`,`R3`,`No DR is elected`],a:[2],e:`The highest priority wins, then the highest router ID. R2 has priority 0 and can never be DR or BDR. R1 and R3 tie at priority 1, so R3 (3.3.3.3) becomes DR and R1 becomes BDR.`},
+{d:"ipc",q:`Which wildcard mask matches the network 10.10.8.0/22 in an OSPF network statement?`,o:[`0.0.3.255`,`0.0.4.255`,`255.255.252.0`,`0.0.7.255`],a:[0],e:`Wildcard = 255.255.255.255 minus the subnet mask. /22 = 255.255.252.0, so the wildcard is 0.0.3.255.`},
+{d:"ipc",q:`Which command creates an IPv6 default static route to next hop 2001:DB8:0:1::1?`,o:[`ipv6 route 0::/128 2001:DB8:0:1::1`,`ip route ::/0 2001:DB8:0:1::1`,`ipv6 route ::/0 2001:DB8:0:1::1`,`ipv6 default-route 2001:DB8:0:1::1`],a:[2],e:`The IPv6 default route is ::/0, configured with "ipv6 route". The router also needs "ipv6 unicast-routing" to forward IPv6 packets.`},
+{d:"ipc",q:`Which first hop redundancy protocol is an IETF open standard?`,o:[`HSRP`,`GLBP`,`VRRP`,`CARP`],a:[2],e:`VRRP (RFC 5798) is the open standard. HSRP and GLBP are Cisco proprietary. CARP is an OpenBSD protocol and isn't on the CCNA.`},
+{d:"ipc",q:`In this routing table entry, what does the value 20 represent?`,c:`O    192.168.5.0/24 [110/20] via 10.0.0.2, 00:03:11, GigabitEthernet0/1`,o:[`Administrative distance`,`OSPF cost (metric) to reach the network`,`Hop count`,`Seconds since the route was learned`],a:[1],e:`The brackets hold [administrative distance/metric]. 110 is OSPF's AD and 20 is the cumulative OSPF cost. 00:03:11 is how long ago the route was learned.`},
+{d:"ipc",q:`What is the effect of "passive-interface GigabitEthernet0/0" under router ospf 1?`,o:[`The interface's network is no longer advertised`,`OSPF hellos are not sent on G0/0, but its network is still advertised`,`The interface is shut down`,`OSPF accepts routes only on that interface`],a:[1],e:`A passive interface stops sending and processing hellos, so no adjacency forms there, but its connected network is still advertised. Use it on LAN interfaces that face only end hosts.`},
+{d:"ipc",q:`On a router-on-a-stick, which subinterface command associates G0/0.10 with VLAN 10?`,o:[`switchport access vlan 10`,`encapsulation dot1Q 10`,`vlan 10`,`ip vlan 10`],a:[1],e:`"encapsulation dot1Q 10" makes the subinterface handle frames tagged with VLAN 10. For the native VLAN, add the keyword "native". The subinterface number doesn't have to match the VLAN, but matching them is the convention.`},
+
+{d:"ips",q:`In NAT terminology, what is the inside global address?`,o:[`The private address assigned to an inside host`,`The public address that represents an inside host to the outside network`,`The address of an outside host as seen from the inside`,`The real public address of an outside host`],a:[1],e:`Inside local is the inside host's real (usually private) address. Inside global is the address it appears as on the outside. Outside global is the external host's real address, and outside local is how that host appears from the inside (usually the same address).`},
+{d:"ips",q:`Which command configures PAT so that inside hosts permitted by ACL 1 share the IP address of G0/1?`,o:[`ip nat inside source list 1 interface g0/1 overload`,`ip nat outside source list 1 interface g0/1`,`ip nat inside source static list 1 g0/1`,`ip nat pool 1 interface g0/1 overload`],a:[0],e:`"overload" turns NAT into PAT, which tracks sessions by port number. You also need "ip nat inside" on the LAN interfaces and "ip nat outside" on G0/1.`},
+{d:"ips",q:`What does the NTP stratum value indicate?`,o:[`The time zone offset`,`The NTP version in use`,`How far the device is from an authoritative time source; lower is closer`,`The polling interval in seconds`],a:[2],e:`Stratum 0 is the reference clock (atomic or GPS). A server attached to it is stratum 1, its clients are stratum 2, and so on. Lower stratum is preferred; stratum 16 means unsynchronized.`},
+{d:"ips",q:`Hosts on 192.168.20.0/24 need addresses from a DHCP server on a different subnet. Where should "ip helper-address" be configured?`,o:[`On the DHCP server's interface`,`On the router interface that receives the clients' DHCP broadcasts (their default gateway)`,`Globally on the access switch`,`On every client PC`],a:[1],e:`The helper address goes on the router interface facing the clients. The router turns their broadcast DHCPDISCOVER into a unicast to the server and fills in the giaddr field so the server chooses the right pool.`},
+{d:"ips",q:`Which syslog severity level number corresponds to warnings?`,o:[`2`,`3`,`4`,`5`],a:[2],e:`0 Emergencies, 1 Alerts, 2 Critical, 3 Errors, 4 Warnings, 5 Notifications, 6 Informational, 7 Debugging. Mnemonic: "Every Awesome Cisco Engineer Will Need Ice cream Daily". Setting a level logs that level and every more severe (lower-numbered) level.`},
+
+{d:"sec",q:`What is the default port security violation mode on a Cisco switch?`,o:[`protect`,`restrict`,`shutdown`,`disable`],a:[2],e:`Shutdown is the default: the port goes err-disabled, the violation counter increments and a syslog message is sent.`},
+{d:"sec",q:`Which port security violation mode drops offending frames, increments the violation counter and sends a syslog message, but keeps the port up?`,o:[`protect`,`restrict`,`shutdown`,`shutdown vlan`],a:[1],e:`Restrict drops and logs. Protect drops silently (no counter, no log). Shutdown err-disables the port.`},
+{d:"sec",q:`Where should a standard IPv4 ACL generally be placed?`,o:[`As close to the source as possible`,`As close to the destination as possible`,`Only on the Internet-facing interface`,`On every interface in the path`],a:[1],e:`Standard ACLs match only the source address. Placed near the source, they could block that host from every destination. Extended ACLs, which also match destination and ports, go close to the source.`},
+{d:"sec",q:`An ACL contains only the line below and is applied inbound on the LAN interface. What traffic from the LAN is allowed through that interface?`,c:`access-list 101 permit tcp 10.1.1.0 0.0.0.255 any eq 443`,o:[`All traffic from 10.1.1.0/24`,`Only HTTPS traffic from 10.1.1.0/24 to any destination`,`HTTPS traffic from any source to 10.1.1.0/24`,`Nothing, because ACL 101 is a standard ACL`],a:[1],e:`ACLs numbered 100–199 are extended. This one permits TCP to destination port 443 from 10.1.1.0/24. Everything else, including ICMP and DNS, hits the implicit "deny any" at the end of every ACL.`},
+{d:"sec",q:`Which attack does DHCP snooping mitigate?`,o:[`MAC flooding`,`Rogue DHCP servers handing out false gateway or DNS information`,`VLAN hopping through double tagging`,`Brute-force SSH logins`],a:[1],e:`DHCP snooping drops DHCP server messages (OFFER, ACK) that arrive on untrusted ports; only the port toward the legitimate server is trusted. It also builds the binding table used by DAI and IP Source Guard. MAC flooding is mitigated by port security.`},
+{d:"sec",q:`By default, Dynamic ARP Inspection validates ARP packets against which data source?`,o:[`The MAC address table`,`The DHCP snooping binding table`,`The routing table`,`The CDP neighbor table`],a:[1],e:`DAI checks the IP-to-MAC mapping in ARP packets on untrusted ports against the DHCP snooping binding table (or a configured ARP ACL). That's why DHCP snooping must be enabled first.`},
+{d:"sec",q:`Which method does WPA3-Personal use to authenticate with a passphrase?`,o:[`PSK with only the 4-way handshake, as in WPA2`,`SAE (Simultaneous Authentication of Equals)`,`802.1X with EAP-TLS`,`WEP shared key`],a:[1],e:`WPA3-Personal replaces WPA2's PSK exchange with SAE, which resists offline dictionary attacks and provides forward secrecy. WPA3-Enterprise uses 802.1X/EAP.`},
+{d:"sec",q:`Which statement correctly compares TACACS+ and RADIUS?`,o:[`TACACS+ uses UDP and encrypts only the password`,`RADIUS uses TCP 49 and separates authentication and authorization`,`TACACS+ uses TCP 49, encrypts the entire payload and separates authentication, authorization and accounting`,`RADIUS is Cisco proprietary`],a:[2],e:`TACACS+ (Cisco-developed) uses TCP 49, encrypts the whole body and separates the three A's, which makes it the usual choice for device administration. RADIUS is an open standard over UDP 1812/1813 that encrypts only the password and combines authentication with authorization; it's common for network access such as 802.1X.`},
+
+{d:"auto",q:`Which of the following is valid JSON?`,o:[`{"hostname": "R1", "interfaces": ["G0/0", "G0/1"]}`,`{'hostname': 'R1'}`,`{"hostname": "R1",}`,`{hostname: "R1"}`],a:[0],e:`JSON keys and strings must use double quotes, trailing commas aren't allowed, and arrays use square brackets.`},
+{d:"auto",q:`In an SDN architecture, which interface does the controller use to communicate with the applications and orchestration tools above it?`,o:[`Southbound API`,`Northbound API`,`Eastbound API`,`Data plane interface`],a:[1],e:`The northbound API (typically REST) faces applications. Southbound APIs and protocols such as OpenFlow, NETCONF and OpFlex let the controller program network devices.`},
+{d:"auto",q:`Which HTTP method corresponds to the CRUD "create" operation in a REST API?`,o:[`GET`,`POST`,`PUT`,`DELETE`],a:[1],e:`Create = POST, Read = GET, Update = PUT (replace) or PATCH (modify), Delete = DELETE.`},
+{d:"auto",q:`Which configuration management tool is agentless, connects over SSH and uses YAML playbooks?`,o:[`Puppet`,`Chef`,`Ansible`,`SaltStack (master/minion)`],a:[2],e:`Ansible is agentless and push-based, with playbooks written in YAML. Puppet (manifests) and Chef (recipes and cookbooks) normally use agents and a pull model.`},
+{d:"auto",q:`Which plane builds the routing table and runs routing protocols such as OSPF?`,o:[`Data plane`,`Control plane`,`Management plane`,`Forwarding plane`],a:[1],e:`The control plane makes decisions (routing protocols, STP, ARP). The data (forwarding) plane moves packets using those decisions. The management plane covers SSH, SNMP and other admin access. SDN centralizes the control plane in a controller.`}
+];
+
+/* ---------------- REVIEW (50) ---------------- */
+const REVIEW = [
+{d:"nf",q:`Which OSI layer uses port numbers to deliver data to the correct application and can provide reliable delivery?`,o:[`Network`,`Data link`,`Transport`,`Session`],a:[2],e:`Layer 4 (TCP and UDP) uses source and destination port numbers. TCP adds reliability through sequencing, acknowledgments and retransmission.`},
+{d:"nf",q:`What is the correct order of the TCP three-way handshake?`,o:[`SYN, ACK, SYN-ACK`,`SYN, SYN-ACK, ACK`,`ACK, SYN, SYN-ACK`,`SYN, SYN, ACK`],a:[1],e:`The client sends SYN, the server answers SYN-ACK, and the client completes with ACK. Connections close with FIN and ACK exchanges.`},
+{d:"nf",q:`What is the dotted-decimal subnet mask for /21?`,o:[`255.255.240.0`,`255.255.248.0`,`255.255.252.0`,`255.255.255.248`],a:[1],e:`/21 = 8 + 8 + 5 bits. Five 1-bits in the third octet are 128 + 64 + 32 + 16 + 8 = 248, giving 255.255.248.0.`},
+{d:"nf",q:`What is the network address of 192.168.10.77/28?`,o:[`192.168.10.64`,`192.168.10.72`,`192.168.10.76`,`192.168.10.80`],a:[0],e:`/28 has a block size of 16, and the block .64–.79 contains .77. Network .64, broadcast .79, usable hosts .65–.78.`},
+{d:"nf",q:`A subnet must support 50 hosts while wasting as few addresses as possible. Which prefix length should be used?`,o:[`/25`,`/26`,`/27`,`/28`],a:[1],e:`/26 gives 2^6 − 2 = 62 usable hosts. /27 gives only 30.`},
+{d:"nf",q:`When building an IPv6 interface ID with modified EUI-64, what is inserted into the middle of the 48-bit MAC address?`,o:[`FFFE`,`FEFF`,`FF00`,`0000`],a:[0],e:`The MAC is split in half and FFFE is inserted, then the 7th bit of the first byte (the U/L bit) is flipped. Example: MAC 0050.56AB.CDEF becomes interface ID 0250:56FF:FEAB:CDEF.`},
+{d:"nf",q:`Which IPv6 address type is the closest equivalent to IPv4 RFC 1918 private addresses?`,o:[`Link-local (FE80::/10)`,`Unique local (FC00::/7)`,`Global unicast (2000::/3)`,`Anycast`],a:[1],e:`Unique local addresses (FC00::/7, in practice FD00::/8) are routable inside an organization but not on the Internet.`},
+{d:"nf",q:`Which fiber type has a smaller core, typically uses lasers and is designed for long distances?`,o:[`Multimode`,`Single-mode`,`Twinax`,`Cat 6A`],a:[1],e:`Single-mode fiber (about a 9 µm core) carries a single light path over many kilometers. Multimode (50 or 62.5 µm core) is cheaper but limited to shorter runs.`},
+{d:"nf",q:`A switch interface shows a rising count of late collisions. What is the most likely cause?`,o:[`A duplex mismatch`,`An incorrect access VLAN`,`A native VLAN mismatch`,`A missing default gateway`],a:[0],e:`Late collisions (after the first 64 bytes) typically appear on the half-duplex side of a duplex mismatch. The full-duplex side often shows CRC errors and runts.`},
+{d:"nf",q:`Which cloud service model gives the consumer a complete application managed by the provider, such as web-based email?`,o:[`IaaS`,`PaaS`,`SaaS`,`DaaS`],a:[2],e:`SaaS delivers finished software. PaaS provides a platform to develop and run your own applications. IaaS provides virtual servers, storage and networking that you manage.`},
+
+{d:"na",q:`Which interface command assigns an access port to VLAN 30?`,o:[`switchport vlan 30`,`switchport access vlan 30`,`vlan 30 access`,`switchport trunk native vlan 30`],a:[1],e:`Use "switchport mode access" and then "switchport access vlan 30". If VLAN 30 doesn't exist, the switch creates it.`},
+{d:"na",q:`What is the default VLAN on a Cisco Catalyst switch?`,o:[`VLAN 0`,`VLAN 1`,`VLAN 99`,`VLAN 1002`],a:[1],e:`All ports start in VLAN 1, which is also the default native VLAN and can't be deleted. Best practice moves user and management traffic off VLAN 1.`},
+{d:"na",q:`Which command shows which ports are trunking, their native VLAN, and the VLANs allowed and active on each trunk?`,o:[`show vlan brief`,`show interfaces trunk`,`show interfaces status`,`show spanning-tree`],a:[1],e:`"show interfaces trunk" lists trunking ports, mode, encapsulation, native VLAN, allowed VLANs and VLANs in forwarding state. "show vlan brief" lists access ports, not trunks.`},
+{d:"na",q:`Using the 802.1D short STP cost values, what is the default cost of a 1 Gbps link?`,o:[`2`,`4`,`19`,`100`],a:[1],e:`Short costs: 10 Mbps = 100, 100 Mbps = 19, 1 Gbps = 4, 10 Gbps = 2. Root path cost is the sum of port costs toward the root.`},
+{d:"na",q:`In 802.1D STP, which port state learns MAC addresses but doesn't yet forward frames?`,o:[`Blocking`,`Listening`,`Learning`,`Forwarding`],a:[2],e:`Order: blocking → listening (15 s) → learning (15 s) → forwarding. Learning fills the MAC table so the switch doesn't flood excessively once it starts forwarding.`},
+{d:"na",q:`Which RSTP port role provides an alternate path to the root bridge and takes over if the root port fails?`,o:[`Designated`,`Alternate`,`Backup`,`Edge`],a:[1],e:`An alternate port receives a superior BPDU from another switch and is a ready backup path to the root. A backup port is a redundant link to a segment where the same switch already has a designated port, which is rare and needs a shared medium.`},
+{d:"na",q:`Which EtherChannel negotiation protocol is Cisco proprietary?`,o:[`LACP`,`PAgP`,`802.3ad`,`LLDP`],a:[1],e:`PAgP uses desirable and auto modes. LACP (IEEE 802.3ad, now 802.1AX) uses active and passive.`},
+{d:"na",q:`Which two settings must match on all physical interfaces in an EtherChannel bundle?`,o:[`Speed and duplex`,`Interface description`,`Switchport mode and the allowed/native VLANs`,`Port number`,`CDP settings`],a:[0,2],e:`Members must share speed, duplex and the same switchport settings (the same access VLAN, or trunk mode with matching allowed and native VLANs). Descriptions and port numbers can differ.`},
+{d:"na",q:`Which AP mode lets a branch AP keep switching client traffic locally if the WAN link to the central WLC fails?`,o:[`Local`,`Monitor`,`FlexConnect`,`Sniffer`],a:[2],e:`FlexConnect APs can switch traffic locally at the branch and keep serving clients in standalone mode. Local mode tunnels all client traffic to the WLC through CAPWAP.`},
+{d:"na",q:`Which command shows the IP address and IOS version of directly connected Cisco devices?`,o:[`show cdp neighbors`,`show cdp neighbors detail`,`show ip interface brief`,`show version`],a:[1],e:`"show cdp neighbors detail" (or "show cdp entry *") includes each neighbor's IP address and software version. The plain "show cdp neighbors" summary omits IP addresses.`},
+
+{d:"ipc",q:`What is the default administrative distance of a static route that uses a next-hop address?`,o:[`0`,`1`,`5`,`110`],a:[1],e:`Connected 0, static 1, eBGP 20, EIGRP internal 90, OSPF 110, RIP 120, EIGRP external 170, iBGP 200.`},
+{d:"ipc",q:`Which list orders route sources from most preferred to least preferred by default administrative distance?`,o:[`Static, connected, OSPF, EIGRP, RIP`,`Connected, static, EIGRP, OSPF, RIP`,`Connected, static, OSPF, RIP, EIGRP`,`Connected, EIGRP, static, OSPF, RIP`],a:[1],e:`Connected 0, static 1, EIGRP 90, OSPF 110, RIP 120.`},
+{d:"ipc",q:`With the default OSPF reference bandwidth of 100 Mbps, what cost is assigned to a FastEthernet interface and to a GigabitEthernet interface?`,o:[`10 and 1`,`1 and 1`,`19 and 4`,`100 and 10`],a:[1],e:`Cost = reference bandwidth ÷ interface bandwidth, with a minimum of 1. Both 100 Mbps and 1 Gbps work out to 1, so OSPF can't tell them apart. Fix it with "auto-cost reference-bandwidth 1000" (or higher) on every router.`},
+{d:"ipc",q:`On an Ethernet segment with a DR and BDR, which state do two DROTHER routers stay in with each other?`,o:[`INIT`,`2-WAY`,`EXSTART`,`FULL`],a:[1],e:`DROTHERs form FULL adjacencies only with the DR and BDR. Between themselves they stay in 2-WAY, which is normal.`},
+{d:"ipc",q:`What are the default OSPF hello and dead intervals on a broadcast (Ethernet) network?`,o:[`5 and 20 seconds`,`10 and 40 seconds`,`30 and 120 seconds`,`60 and 180 seconds`],a:[1],e:`Broadcast and point-to-point networks default to hello 10 s and dead 40 s. NBMA defaults to 30/120. Mismatched timers prevent an adjacency.`},
+{d:"ipc",q:`Which command configures an IPv4 default static route to next hop 198.51.100.1?`,o:[`ip route 0.0.0.0 255.255.255.255 198.51.100.1`,`ip default-gateway 198.51.100.1`,`ip route 0.0.0.0 0.0.0.0 198.51.100.1`,`ip route 255.255.255.255 0.0.0.0 198.51.100.1`],a:[2],e:`A default route uses network 0.0.0.0 with mask 0.0.0.0, which matches every destination. "ip default-gateway" is for devices with IP routing disabled, such as a Layer 2 switch.`},
+{d:"ipc",q:`Which global command must be entered before a Cisco router forwards IPv6 packets?`,o:[`ipv6 enable`,`ipv6 routing`,`ipv6 unicast-routing`,`ip routing ipv6`],a:[2],e:`"ipv6 unicast-routing" enables IPv6 forwarding and router advertisements. "ipv6 enable" on an interface only creates a link-local address.`},
+{d:"ipc",q:`On which OSPF network type is no DR or BDR elected?`,o:[`Broadcast`,`Non-broadcast (NBMA)`,`Point-to-point`,`Every OSPF network type elects a DR`],a:[2],e:`A point-to-point link has only two routers, so a DR adds nothing. "ip ospf network point-to-point" on an Ethernet link between two routers skips the election and speeds up adjacency.`},
+{d:"ipc",q:`Which global command lets a Layer 3 switch route between its SVIs?`,o:[`ip routing`,`ip forward`,`router enable`,`no switchport`],a:[0],e:`"ip routing" turns on IPv4 routing. SVIs are created with "interface vlan X". "no switchport" turns a physical port into a routed port but doesn't enable routing globally.`},
+{d:"ipc",q:`Which is a fully specified static route?`,o:[`ip route 10.0.0.0 255.0.0.0 192.168.1.1`,`ip route 10.0.0.0 255.0.0.0 g0/1`,`ip route 10.0.0.0 255.0.0.0 g0/1 192.168.1.1`,`ip route 10.0.0.0 0.255.255.255 g0/1`],a:[2],e:`A fully specified route names both the exit interface and the next hop. On Ethernet, a route with only an exit interface makes the router ARP for every destination and rely on proxy ARP. The last option uses a wildcard instead of a subnet mask, which is invalid.`},
+{d:"ipc",q:`What is the "gateway of last resort" in "show ip route" output?`,o:[`The router with the highest router ID`,`The next hop of the default route, used when no more specific route matches`,`The first static route configured`,`The interface with the lowest IP address`],a:[1],e:`It's the default route (0.0.0.0/0). Without one, the output says "Gateway of last resort is not set" and packets with no matching route are dropped.`},
+{d:"ipc",q:`R1 (HSRP priority 110) and R2 (priority 100) are in the same group, and preemption is not configured. R1 reloads, R2 becomes active, and then R1 comes back. Which router is active?`,o:[`R1, because it has the higher priority`,`R2, because preemption is disabled`,`Both routers become active`,`Neither until the group is reset manually`],a:[1],e:`Without "standby <group> preempt", a higher-priority router that returns doesn't take over from the current active router. Preemption is off by default in HSRP (it's on by default in VRRP).`},
+
+{d:"ips",q:`Which command permanently maps inside host 10.1.1.10 to public address 203.0.113.10?`,o:[`ip nat inside source static 10.1.1.10 203.0.113.10`,`ip nat outside source static 10.1.1.10 203.0.113.10`,`ip nat inside source list 10.1.1.10 203.0.113.10`,`ip nat pool STATIC 10.1.1.10 203.0.113.10`],a:[0],e:`Static NAT is a one-to-one mapping, so outside users can reach the inside server at 203.0.113.10. The order is inside local, then inside global.`},
+{d:"ips",q:`In what order are the four DHCPv4 messages exchanged when a client obtains an address?`,o:[`Request, Offer, Discover, Acknowledge`,`Discover, Offer, Request, Acknowledge`,`Discover, Request, Offer, Acknowledge`,`Offer, Discover, Acknowledge, Request`],a:[1],e:`DORA: Discover (broadcast), Offer, Request (broadcast, so other servers know which offer was accepted), Acknowledge.`},
+{d:"ips",q:`Which DNS record type maps a hostname to an IPv6 address?`,o:[`A`,`AAAA`,`CNAME`,`MX`],a:[1],e:`A = IPv4, AAAA ("quad A") = IPv6, CNAME = alias, MX = mail exchanger, PTR = reverse lookup.`},
+{d:"ips",q:`Which SNMP version provides message authentication and encryption?`,o:[`SNMPv1`,`SNMPv2c`,`SNMPv3`,`Every version that uses community strings`],a:[2],e:`SNMPv3 adds users with authentication and privacy (the authPriv security level). SNMPv1 and v2c send community strings in clear text.`},
+{d:"ips",q:`Which DSCP marking is recommended for voice bearer traffic?`,o:[`CS1 (8)`,`AF41 (34)`,`EF (46)`,`Default (0)`],a:[2],e:`Expedited Forwarding (46) goes into a low-latency priority queue for voice. AF41 is commonly used for interactive video, and CS1 for scavenger traffic.`},
+
+{d:"sec",q:`Which two items must be configured before you can generate RSA keys for SSH on a Cisco router?`,o:[`A hostname other than the default`,`An IP domain name`,`An enable password`,`A banner`,`A loopback interface`],a:[0,1],e:`The key name is built from hostname.domain, so you need "hostname" (not the default "Router") and "ip domain-name" before "crypto key generate rsa". You also need a local user, "login local" and "transport input ssh" on the VTY lines.`},
+{d:"sec",q:`Why is "enable secret" preferred over "enable password"?`,o:[`It is shorter`,`It stores the password as a hash and takes precedence over enable password`,`It also sets the console password`,`It encrypts all passwords in the configuration`],a:[1],e:`"enable secret" stores a one-way hash (type 5 MD5 on many images, type 8 or 9 on newer ones). "enable password" is plain text unless "service password-encryption" applies weak, reversible type 7 encoding. If both are set, the secret is used.`},
+{d:"sec",q:`Where should an extended IPv4 ACL generally be placed?`,o:[`As close to the source as possible`,`As close to the destination as possible`,`Only on loopback interfaces`,`On the outside interface of the NAT router`],a:[0],e:`Extended ACLs match source, destination, protocol and port, so they can filter precisely near the source and keep unwanted traffic off the rest of the network.`},
+{d:"sec",q:`Which ACL entry matches only the host 192.168.1.5?`,o:[`permit 192.168.1.5 0.0.0.255`,`permit 192.168.1.5 255.255.255.255`,`permit host 192.168.1.5`,`permit 192.168.1.0 0.0.0.5`],a:[2],e:`"host 192.168.1.5" is shorthand for 192.168.1.5 0.0.0.0. A wildcard of 255.255.255.255 matches any address, the same as "any".`},
+{d:"sec",q:`Which ACL entry denies Telnet from 10.1.1.0/24 to any destination?`,o:[`access-list 10 deny tcp 10.1.1.0 0.0.0.255 any eq 23`,`access-list 110 deny tcp 10.1.1.0 0.0.0.255 any eq 23`,`access-list 110 deny udp 10.1.1.0 0.0.0.255 any eq 23`,`access-list 110 deny tcp any 10.1.1.0 0.0.0.255 eq 23`],a:[1],e:`Telnet is TCP port 23, and matching protocol and port needs an extended ACL (numbers 100–199 or 2000–2699). The first option uses a standard ACL number, and the last reverses source and destination.`},
+{d:"sec",q:`What does "switchport port-security mac-address sticky" do?`,o:[`Permanently disables MAC learning`,`Learns MAC addresses dynamically and adds them to the running configuration`,`Allows unlimited MAC addresses`,`Saves the MAC table to NVRAM automatically`],a:[1],e:`Sticky learning adds learned MACs to the running config as secure addresses. Save with "copy running-config startup-config" or they're lost on reload.`},
+{d:"sec",q:`Users receive an email that appears to come from IT, asking them to verify their password on a linked site that imitates the company login page. What type of attack is this?`,o:[`Phishing`,`Denial of service`,`Man-in-the-middle`,`Brute force`],a:[0],e:`Phishing is social engineering through fraudulent messages. Spear phishing targets specific people, and whaling targets executives. User awareness training is the main countermeasure.`},
+{d:"sec",q:`Which VPN type permanently connects two sites' networks so that end hosts need no VPN client software?`,o:[`Remote-access SSL VPN`,`Site-to-site IPsec VPN`,`Clientless VPN`,`802.1X`],a:[1],e:`Site-to-site VPNs are built between gateways such as routers and firewalls and are transparent to hosts. Remote-access VPNs connect individual users, usually with a client such as Cisco Secure Client (AnyConnect).`},
+
+{d:"auto",q:`In JSON, what does a pair of square brackets [ ] represent?`,o:[`An object`,`An array (ordered list)`,`A string`,`A comment`],a:[1],e:`Square brackets hold an array; curly braces hold an object of key/value pairs. JSON has no comment syntax.`},
+{d:"auto",q:`A REST API call returns HTTP status 401. What does this mean?`,o:[`The request succeeded`,`The resource was created`,`Authentication is missing or invalid (Unauthorized)`,`The server had an internal error`],a:[2],e:`2xx = success (200 OK, 201 Created). 4xx = client error (400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found). 5xx = server error.`},
+{d:"auto",q:`In a controller-based fabric such as Cisco SD-Access, what is the underlay?`,o:[`The virtual network of tunnels built for user traffic`,`The physical network and routing that provide IP connectivity between fabric devices`,`The northbound REST API`,`The policy database on the controller`],a:[1],e:`The underlay is the physical devices plus their routing protocol (IS-IS in SD-Access). The overlay is the virtual network built on top with tunnels (VXLAN in SD-Access).`},
+{d:"auto",q:`Which is an advantage of controller-based networking (such as Cisco Catalyst Center) over traditional device-by-device management?`,o:[`Every device must be configured manually through the CLI`,`Configuration and policy are defined centrally and pushed consistently to many devices`,`It removes the need for a data plane`,`It works only with a single vendor's hardware`],a:[1],e:`Central management reduces configuration errors, speeds up deployment, and provides network-wide visibility and APIs for automation.`},
+{d:"auto",q:`Which configuration management tool uses agents on the managed nodes, a pull model and declarative "manifests"?`,o:[`Ansible`,`Puppet`,`Terraform`,`Python Netmiko`],a:[1],e:`Puppet agents pull their configuration from a Puppet server and apply manifests. Ansible is agentless and push-based.`}
+];
+
+/* ---------------- REVIEW SET B (50) ---------------- */
+const REVIEW2 = [
+{d:"nf",q:`Which device separates broadcast domains by default?`,o:[`Hub`,`Layer 2 switch`,`Router`,`Wireless repeater`],a:[2],e:`Routers don't forward broadcasts by default, so each router interface is its own broadcast domain. A switch gives each port its own collision domain, but all ports in one VLAN share a broadcast domain. VLANs also separate broadcast domains.`},
+{d:"nf",q:`Which subnet does host 10.20.37.200/20 belong to?`,o:[`10.20.32.0/20`,`10.20.36.0/20`,`10.20.37.0/20`,`10.20.16.0/20`],a:[0],e:`/20 = 255.255.240.0, a block size of 16 in the third octet: 0, 16, 32, 48 and so on. 37 falls in 32–47, so the subnet is 10.20.32.0/20, with broadcast 10.20.47.255.`},
+{d:"nf",q:`How many /30 subnets can be created from a single /24 network?`,o:[`32`,`62`,`64`,`128`],a:[2],e:`Going from /24 to /30 borrows 6 bits: 2^6 = 64 subnets, each with 2 usable hosts, which suits point-to-point links. (/31 is also allowed on point-to-point links under RFC 3021.)`},
+{d:"nf",q:`Which IPv6 multicast address reaches all routers on the local link?`,o:[`FF02::1`,`FF02::2`,`FF02::5`,`FF02::1:FF00:0/104`],a:[1],e:`FF02::1 = all nodes, FF02::2 = all routers (hosts send Router Solicitations here), FF02::5 and FF02::6 = OSPFv3 routers, FF02::1:FFxx:xxxx = solicited-node multicast used by Neighbor Discovery.`},
+{d:"nf",q:`Which mechanism does IPv6 use instead of ARP to find a neighbor's MAC address?`,o:[`ARP over IPv6`,`ICMPv6 Neighbor Discovery (Neighbor Solicitation and Advertisement)`,`DHCPv6`,`Reverse ARP`],a:[1],e:`IPv6 has no ARP and no broadcasts. A host sends an ICMPv6 Neighbor Solicitation to the target's solicited-node multicast address, and the target answers with a Neighbor Advertisement containing its MAC.`},
+{d:"nf",q:`With SLAAC, how does a host learn its IPv6 prefix?`,o:[`From a DHCPv6 server`,`From ICMPv6 Router Advertisement messages sent by the local router`,`From a DNS AAAA record`,`It derives the prefix from its own MAC address`],a:[1],e:`Routers send Router Advertisements periodically, or when a host sends a Router Solicitation to FF02::2. The RA carries the prefix and length. The host creates its interface ID with EUI-64 or a random value and runs Duplicate Address Detection before using the address.`},
+{d:"nf",q:`What is the maximum segment length for 1000BASE-T over Cat 5e or Cat 6 copper?`,o:[`55 m`,`100 m`,`185 m`,`500 m`],a:[1],e:`Twisted-pair Ethernet is limited to 100 m per segment. The exception worth knowing is 10GBASE-T over Cat 6, which is limited to about 55 m; Cat 6A reaches the full 100 m.`},
+{d:"nf",q:`Which IEEE standard defines PoE+, supplying up to 30 W per switch port?`,o:[`802.3af`,`802.3at`,`802.3bt`,`802.3ad`],a:[1],e:`802.3af (PoE) supplies up to 15.4 W, 802.3at (PoE+) up to 30 W, and 802.3bt up to 60 W or 90 W per port. 802.3ad is link aggregation (LACP).`},
+{d:"nf",q:`Which statement describes a spine-leaf architecture?`,o:[`Leaf switches connect to each other in a full mesh`,`Every leaf connects to every spine, and leaves don't connect to other leaves`,`Servers connect directly to the spine switches`,`Spine switches connect only to the WAN`],a:[1],e:`Any leaf reaches any other leaf in exactly two hops (leaf–spine–leaf), which gives predictable latency in data centers. Endpoints connect to leaves, and spines connect only to leaves.`},
+{d:"nf",q:`Compared with 2.4 GHz, which statement about the 5 GHz band is true?`,o:[`It has longer range and fewer channels`,`It has more non-overlapping channels but shorter range and weaker penetration through walls`,`It is used only by 802.11b`,`It shares spectrum with Bluetooth and microwave ovens`],a:[1],e:`5 GHz offers many non-overlapping 20 MHz channels and less interference, but higher frequencies lose strength faster. 2.4 GHz shares spectrum with Bluetooth and microwaves and has only three non-overlapping channels.`},
+
+{d:"na",q:`By default, how long does a Cisco switch keep a dynamically learned MAC address that has no traffic?`,o:[`60 seconds`,`120 seconds`,`300 seconds`,`3600 seconds`],a:[2],e:`Dynamic entries age out after 300 seconds of inactivity (changeable with "mac address-table aging-time"). Static entries never age out.`},
+{d:"na",q:`Which DTP mode actively tries to convert the link to a trunk?`,o:[`dynamic auto`,`dynamic desirable`,`switchport nonegotiate`,`access`],a:[1],e:`Dynamic desirable sends DTP frames asking to trunk and forms a trunk with trunk, desirable or auto neighbors. Dynamic auto only responds. "switchport nonegotiate" stops DTP frames entirely.`},
+{d:"na",q:`What is a result of a native VLAN mismatch on an 802.1Q trunk?`,o:[`The trunk shuts down immediately`,`Untagged frames from one side's native VLAN arrive in a different VLAN on the other side, and CDP logs a mismatch`,`All tagged VLANs stop forwarding`,`The switches renegotiate a common native VLAN automatically`],a:[1],e:`Each side places untagged frames in its own native VLAN, so traffic can leak between VLANs. The trunk stays up, CDP reports %CDP-4-NATIVE_VLAN_MISMATCH, and PVST+ may block the affected VLANs on that port as inconsistent.`},
+{d:"na",q:`What is the first criterion a non-root switch uses to choose its root port?`,o:[`Lowest sender bridge ID`,`Lowest root path cost`,`Lowest local port number`,`Highest port priority`],a:[1],e:`The order is: lowest root path cost, then lowest neighbor (sender) bridge ID, then lowest neighbor port priority, then lowest neighbor port number.`},
+{d:"na",q:`In what increments must the STP bridge priority be configured on a switch using the extended system ID?`,o:[`1`,`1024`,`4096`,`8192`],a:[2],e:`The low 12 bits of the priority field carry the VLAN ID, so priority is set in multiples of 4096 (0 to 61440). The default is 32768, displayed as 32768 plus the VLAN ID.`},
+{d:"na",q:`On which ports should PortFast be enabled?`,o:[`Trunk ports between switches`,`Access ports connected to end devices such as PCs and printers`,`Only ports connected to routers running HSRP`,`All ports, including uplinks`],a:[1],e:`PortFast skips the listening and learning states so hosts get connectivity immediately, which helps DHCP. On links to other switches it risks temporary loops, so pair it with BPDU Guard.`},
+{d:"na",q:`What is the maximum number of active links in a single LACP EtherChannel on a Catalyst switch?`,o:[`2`,`4`,`8`,`16`],a:[2],e:`Up to 8 links are active. LACP can hold up to 8 more as hot-standby links (16 configured in total). PAgP supports up to 8.`},
+{d:"na",q:`Which WLC port is used for out-of-band management and initial setup, and doesn't carry client traffic?`,o:[`Distribution system port`,`Service port`,`Redundancy port`,`AP port`],a:[1],e:`The service port is for out-of-band management. Distribution system ports connect to the switched network and carry CAPWAP and client traffic, and they can be bundled with LAG. The redundancy port links a high-availability controller pair.`},
+{d:"na",q:`Which AP mode stops serving clients and scans channels for rogue APs, intrusion detection and location tracking?`,o:[`Local`,`FlexConnect`,`Monitor`,`Bridge`],a:[2],e:`Monitor mode doesn't serve clients; it scans for rogues, IDS events and location. Bridge mode builds wireless point-to-point or mesh links. Sniffer mode captures frames and sends them to an analyzer such as Wireshark.`},
+{d:"na",q:`What are the default CDP timers on Cisco devices?`,o:[`Advertisements every 30 seconds, hold time 90 seconds`,`Advertisements every 60 seconds, hold time 180 seconds`,`Advertisements every 10 seconds, hold time 40 seconds`,`Advertisements every 5 seconds, hold time 15 seconds`],a:[1],e:`CDP advertises every 60 seconds and neighbors keep the entry for 180 seconds. LLDP defaults to every 30 seconds with a 120-second hold time.`},
+
+{d:"ipc",q:`What does a route marked "L" in "show ip route" represent?`,o:[`A route learned from a link-state protocol`,`A /32 host route for the router's own interface address`,`A route learned through LLDP`,`A static route to a loopback interface`],a:[1],e:`Each addressed interface installs a C (connected) route for its subnet and an L (local) /32 route for its own IP. IPv6 does the same with a /128.`},
+{d:"ipc",q:`OSPF learns two paths to the same network with equal cost. What happens by default?`,o:[`Only the path through the neighbor with the lowest router ID is used`,`Both are installed and traffic is load-shared (up to 4 equal-cost paths by default)`,`Only the first path learned is installed`,`OSPF disables one of the interfaces`],a:[1],e:`OSPF installs equal-cost routes and the router shares traffic across them. The default maximum-paths is 4, and it can be changed.`},
+{d:"ipc",q:`When a router forwards an IPv4 packet to the next hop (no NAT), which fields change?`,o:[`The source and destination IP addresses`,`The source and destination MAC addresses are rewritten, and the TTL decreases by 1`,`Only the destination MAC address`,`Nothing changes`],a:[1],e:`Each hop builds a new Layer 2 header, with its own MAC as source and the next hop's MAC as destination. The IP addresses stay the same end to end unless NAT applies; the TTL is decremented and the header checksum recalculated.`},
+{d:"ipc",q:`Which OSPF packet type carries link-state advertisements (LSAs) to a neighbor?`,o:[`Hello`,`DBD`,`LSR`,`LSU`],a:[3],e:`The five OSPF packet types: Hello (find and keep neighbors), DBD (database summary), LSR (request specific LSAs), LSU (carries LSAs) and LSAck (acknowledges them).`},
+{d:"ipc",q:`Which OSPF neighbor state comes immediately after ExStart?`,o:[`2-Way`,`Loading`,`Exchange`,`Full`],a:[2],e:`Down → Init → 2-Way → ExStart (master and slave chosen) → Exchange (DBDs swapped) → Loading (LSRs and LSUs) → Full. Neighbors stuck in ExStart or Exchange usually have an MTU mismatch.`},
+{d:"ipc",q:`On a broadcast segment, to which multicast address does a DROTHER send its link-state updates?`,o:[`224.0.0.5`,`224.0.0.6`,`224.0.0.9`,`224.0.0.10`],a:[1],e:`224.0.0.6 reaches the DR and BDR. The DR then floods the update to 224.0.0.5, all OSPF routers. 224.0.0.9 is used by RIPv2 and 224.0.0.10 by EIGRP.`},
+{d:"ipc",q:`Which interface command enables OSPF process 1 on that interface in area 0, without a network statement?`,o:[`network 0.0.0.0 area 0`,`ip ospf 1 area 0`,`ospf area 0 enable`,`router ospf 1 area 0`],a:[1],e:`"ip ospf <process-id> area <area-id>" in interface mode enables OSPF on that interface and advertises its subnet.`},
+{d:"ipc",q:`What prefix length does an IPv4 host route use?`,o:[`/24`,`/30`,`/32`,`/0`],a:[2],e:`A host route matches a single address: /32 in IPv4, /128 in IPv6. /0 is a default route.`},
+{d:"ipc",q:`Which IPv6 static route is valid when the next hop is a link-local address?`,o:[`ipv6 route 2001:db8:1::/64 fe80::2`,`ipv6 route 2001:db8:1::/64 g0/0 fe80::2`,`ip route 2001:db8:1::/64 fe80::2`,`ipv6 route fe80::2 2001:db8:1::/64`],a:[1],e:`A link-local address is unique only on its own link, so the router must also know the exit interface. A link-local next hop therefore requires a fully specified route.`},
+{d:"ipc",q:`Which virtual MAC address does HSRP version 1 use for group 10?`,o:[`0000.0C07.AC10`,`0000.0C07.AC0A`,`0000.0C9F.F00A`,`0000.5E00.010A`],a:[1],e:`HSRPv1 uses 0000.0C07.ACxx, where xx is the group number in hex (10 = 0A). HSRPv2 uses 0000.0C9F.Fxxx, and VRRP uses 0000.5E00.01xx.`},
+{d:"ipc",q:`Which single summary route covers exactly 172.16.0.0/24 through 172.16.3.0/24?`,o:[`172.16.0.0/21`,`172.16.0.0/22`,`172.16.0.0/23`,`172.16.0.0/24`],a:[1],e:`Four /24 networks need 2 bits, so /22 (255.255.252.0) covers 172.16.0.0–172.16.3.255. A /21 would also include 172.16.4.0–172.16.7.255.`},
+{d:"ipc",q:`What happens to the IPv4 TTL field as a packet crosses routers?`,o:[`Each router increases it by 1`,`Each router decrements it; at 0 the packet is dropped and ICMP Time Exceeded is sent to the source`,`It is used only by IPv6`,`Switches reset it to 255`],a:[1],e:`TTL stops looping packets from circulating forever. Traceroute sends packets with TTL 1, 2, 3 and so on and lists each router that returns Time Exceeded. IPv6 calls the field Hop Limit.`},
+
+{d:"ips",q:`Dynamic NAT uses a pool of 11 public addresses without the "overload" keyword. What happens when a 12th inside host needs a translation while all 11 are in use?`,o:[`It is translated with PAT automatically`,`It can't be translated until an entry times out, so its traffic fails`,`The router adds addresses to the pool`,`Its traffic is sent untranslated`],a:[1],e:`Dynamic NAT without overload is one-to-one. Once the pool is used up, more translations fail. Adding "overload" to the "ip nat inside source list ... pool ..." command enables PAT on the pool.`},
+{d:"ips",q:`In stateless DHCPv6, how does a host get its IPv6 address and its DNS server?`,o:[`Both from the DHCPv6 server`,`Its address through SLAAC, and DNS and other options from DHCPv6`,`Its address from DHCPv6, and DNS from SLAAC`,`Both must be configured manually`],a:[1],e:`The Router Advertisement has the O (Other configuration) flag set and the M flag clear. The host builds its own address with SLAAC and asks DHCPv6 only for options such as DNS. Stateful DHCPv6 (M flag set) assigns addresses too.`},
+{d:"ips",q:`Which QoS tool drops or re-marks traffic that exceeds a configured rate, without buffering it?`,o:[`Shaping`,`Policing`,`Queuing`,`Classification`],a:[1],e:`Policing drops or re-marks excess traffic and adds no delay; it's common at the provider edge. Shaping buffers the excess and sends it later, smoothing the rate at the cost of delay.`},
+{d:"ips",q:`Which command copies a router's running configuration to a TFTP server?`,o:[`copy tftp running-config`,`copy running-config tftp`,`copy startup-config flash`,`write tftp`],a:[1],e:`The syntax is "copy <source> <destination>", and IOS then prompts for the server address and file name. "copy tftp running-config" does the reverse: it merges a configuration from the server into the running config.`},
+{d:"ips",q:`Which SNMP message does an agent send on its own, without a request and without expecting an acknowledgment?`,o:[`Get`,`Set`,`Trap`,`Inform`],a:[2],e:`A trap is an unsolicited, unacknowledged notification. An inform is an acknowledged notification. Get and Set are requests sent by the manager to UDP 161; traps and informs go to the manager on UDP 162.`},
+
+{d:"sec",q:`What do the three A's in AAA stand for?`,o:[`Authentication, Authorization, Accounting`,`Access, Authentication, Auditing`,`Authorization, Availability, Accounting`,`Authentication, Access control, Alerting`],a:[0],e:`Authentication = who you are, Authorization = what you're allowed to do, Accounting = a record of what you did. Cisco devices use RADIUS or TACACS+ servers for centralized AAA.`},
+{d:"sec",q:`In 802.1X, which device is the authenticator?`,o:[`The client PC running 802.1X software`,`The switch, or the AP/WLC, that controls access to the port`,`The RADIUS server`,`The DHCP server`],a:[1],e:`Supplicant = the client, authenticator = the switch or AP/WLC, authentication server = RADIUS (for example Cisco ISE). The authenticator relays EAP messages between them and opens the port only after authentication succeeds.`},
+{d:"sec",q:`Which wildcard mask, used with 172.16.16.0, matches every address from 172.16.16.0 to 172.16.31.255?`,o:[`0.0.31.255`,`0.0.15.255`,`0.0.16.255`,`255.255.240.0`],a:[1],e:`The range is 172.16.16.0/20 (a block of 16 in the third octet). Wildcard = 255.255.255.255 − 255.255.240.0 = 0.0.15.255.`},
+{d:"sec",q:`A packet matches ACL line 20 (deny) and also line 40 (permit) of the same ACL. What happens?`,o:[`It is permitted, because line 40 permits it`,`It is denied, because the first matching entry (line 20) applies and processing stops`,`It is logged and then permitted`,`The router ignores both lines`],a:[1],e:`ACLs are read top-down and stop at the first match, so order matters. Put specific entries before general ones.`},
+{d:"sec",q:`What does "ip access-group 110 out" on interface G0/1 do?`,o:[`Filters packets entering G0/1`,`Filters packets leaving G0/1`,`Restricts Telnet and SSH access to the router`,`Filters only routing protocol updates`],a:[1],e:`"ip access-group <acl> in|out" filters traffic entering or leaving the interface. Outbound ACLs don't filter traffic the router itself generates. To restrict VTY access, use "access-class" on the lines.`},
+{d:"sec",q:`An attacker sends frames from thousands of fake source MAC addresses to fill a switch's MAC address table. Which attack is this?`,o:[`ARP spoofing`,`MAC address table overflow (MAC flooding)`,`DHCP starvation`,`VLAN hopping`],a:[1],e:`When the table is full, the switch floods unknown unicasts like a hub, so the attacker can capture other users' traffic. Port security mitigates it by limiting MAC addresses per port. DHCP starvation instead exhausts a DHCP pool with fake requests.`},
+{d:"sec",q:`Which term describes a weakness in a system that could be used to compromise it?`,o:[`Threat`,`Exploit`,`Vulnerability`,`Mitigation`],a:[2],e:`A vulnerability is the weakness. A threat is a potential danger that could take advantage of it, an exploit is the actual method used, and mitigation reduces the risk.`},
+{d:"sec",q:`Which is an example of multifactor authentication?`,o:[`A long password plus a security question`,`A password plus a one-time code from an authenticator app on your phone`,`Two different passwords`,`A username and a password`],a:[1],e:`MFA combines different kinds of factor: something you know (a password), something you have (a phone, token or smart card) and something you are (a biometric). A password plus a security question are both "something you know", so they don't count as MFA.`},
+
+{d:"auto",q:`What is YANG?`,o:[`A scripting language that replaces Python`,`A data modeling language that defines the structure of configuration and operational data`,`A transport protocol for device configuration`,`A tool that validates JSON`],a:[1],e:`YANG models describe what data a device exposes and how it's structured. NETCONF (XML over SSH) and RESTCONF (XML or JSON over HTTPS) carry data that follows those models.`},
+{d:"auto",q:`Which protocol configures devices over SSH (TCP 830) using XML-encoded data?`,o:[`RESTCONF`,`NETCONF`,`SNMPv3`,`HTTP`],a:[1],e:`NETCONF runs over SSH on TCP 830 and encodes data in XML. RESTCONF uses HTTPS, JSON or XML, and standard HTTP methods.`},
+{d:"auto",q:`What JSON data type is the value of "enabled" below?`,c:`{"vlan": 10, "name": "USERS", "enabled": true}`,o:[`String`,`Number`,`Boolean`,`Null`],a:[2],e:`true and false, lowercase and unquoted, are booleans. 10 is a number and "USERS" is a string. A quoted "true" would be a string.`},
+{d:"auto",q:`Which REST constraint means the server keeps no client session information between requests?`,o:[`Cacheable`,`Stateless`,`Layered system`,`Uniform interface`],a:[1],e:`Each request must carry everything the server needs, such as an authentication token, and the server stores no session state. This makes REST APIs easy to scale.`},
+{d:"auto",q:`Which is an example of predictive AI in network operations?`,o:[`Writing a new configuration template from a natural-language prompt`,`Analyzing historical telemetry to forecast problems, such as a link or device likely to fail`,`Replacing routing protocols`,`Encrypting traffic between sites`],a:[1],e:`Predictive AI and machine learning find patterns in past data to forecast failures, capacity needs and anomalies. Generative AI creates new content, such as configurations, summaries or chat answers. Either way, people should review changes before they reach production.`}
+];
+
+/* ---------------- helpers ---------------- */
+const $ = (s,el=document)=>el.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const KEYS = "ABCDE";
+const same = (a,b)=>a.length===b.length && [...a].sort().every((v,i)=>v===[...b].sort()[i]);
+function store(k,v){try{ if(v===undefined) return JSON.parse(localStorage.getItem(k)); localStorage.setItem(k,JSON.stringify(v)); }catch(e){ return null; }}
+function prompt2(q){ return q.a.length>1 ? ` <span class="chip" style="background:var(--warn-soft);color:var(--warn)">Choose ${q.a.length===2?"two":q.a.length}</span>` : ""; }
+
+/* ---------------- tabs ---------------- */
+const VIEWS = ["exam","review","labs"];
+function show(v){
+  if(!VIEWS.includes(v)) v="exam";
+  VIEWS.forEach(x=>{ $("#view-"+x).hidden = x!==v; $("#tab-"+x).setAttribute("aria-selected", x===v); });
+}
+// Switch the view first; updating the hash is only a bookmark convenience and
+// can be blocked by the browser's sandbox, so it must never stop the switch.
+document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",e=>{
+  e.preventDefault();
+  show(b.dataset.view);
+  try{ history.replaceState(null,"","#"+b.dataset.view); }catch(err){}
+}));
+window.addEventListener("hashchange",()=>{ const v=location.hash.slice(1); if(VIEWS.includes(v)) show(v); });
+
+/* ---------------- EXAM ---------------- */
+const EX_MIN = 60;
+let ex = null, tick = null, pendingSubmit = false, resFilter = "all";
+const examEl = $("#view-exam");
+
+function domainCounts(list){ const c={}; list.forEach(q=>c[q.d]=(c[q.d]||0)+1); return c; }
+
+function renderExamStart(){
+  const c = domainCounts(EXAM);
+  examEl.innerHTML = `
+  <div class="panel">
+    <h2 style="font-size:22px">Practice exam</h2>
+    <p class="muted" style="margin:6px 0 0;max-width:68ch">50 questions in 60 minutes, mixed across all six domains in proportion to the official blueprint. You can move between questions, flag them for review, and change answers until you submit. Explanations appear after you submit.</p>
+    <div class="tbl-wrap" style="margin-top:16px"><table class="dom-table">
+      <tr><th>Domain</th><th class="num">Blueprint weight</th><th class="num">Questions</th></tr>
+      ${DOMAINS.map(d=>`<tr><td>${d.name}</td><td class="num">${d.w}%</td><td class="num">${c[d.id]}</td></tr>`).join("")}
+      <tr><td><b>Total</b></td><td class="num">100%</td><td class="num"><b>${EXAM.length}</b></td></tr>
+    </table></div>
+    <div class="row" style="margin-top:18px">
+      <label class="done" style="font-weight:500"><input type="checkbox" id="ex-shuffle" checked> Shuffle question order</label>
+      <span class="spacer"></span>
+      <button class="btn primary" id="ex-start">Start exam</button>
+    </div>
+    <p class="muted" style="font-size:13px;margin:14px 0 0">The real CCNA 200-301 runs about 120 minutes, with a varying number of questions (roughly 100) including drag-and-drop and simulations. Cisco doesn't publish a fixed passing score; aim for 85% or better here before booking.</p>
+  </div>`;
+  $("#ex-start").onclick = startExam;
+}
+
+function startExam(){
+  const idx = EXAM.map((_,i)=>i);
+  if($("#ex-shuffle").checked){ for(let i=idx.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]];} }
+  ex = {order:idx, ans:{}, flag:{}, cur:0, end:Date.now()+EX_MIN*60000, done:false};
+  pendingSubmit=false;
+  clearInterval(tick); tick=setInterval(updTimer,1000);
+  renderExamQ();
+}
+
+function fmt(ms){ ms=Math.max(0,ms); const s=Math.floor(ms/1000); return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0"); }
+function updTimer(){
+  if(!ex||ex.done) return;
+  const left = ex.end-Date.now(), t=$("#ex-timer");
+  if(t){ t.textContent=fmt(left); t.classList.toggle("low", left<5*60000); }
+  if(left<=0) submitExam();
+}
+
+function renderExamQ(){
+  const qi = ex.order[ex.cur], q = EXAM[qi], sel = ex.ans[qi]||[], multi = q.a.length>1;
+  const answered = Object.keys(ex.ans).filter(k=>ex.ans[k].length).length;
+  examEl.innerHTML = `
+  <div class="panel">
+    <div class="exam-top">
+      <div><div class="eyebrow">Question ${ex.cur+1} of ${EXAM.length}</div><div class="muted" style="font-size:13px">${answered} answered · ${Object.values(ex.flag).filter(Boolean).length} flagged</div></div>
+      <span class="spacer"></span>
+      <div class="timer" id="ex-timer" aria-label="Time remaining">${fmt(ex.end-Date.now())}</div>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="q-head"><span class="chip">${DNAME[q.d]}</span>${prompt2(q)}<span class="spacer"></span>
+      <button class="btn flagbtn" id="ex-flag" aria-pressed="${!!ex.flag[qi]}">${ex.flag[qi]?"Flagged":"Flag for review"}</button></div>
+    <p class="q-text">${esc(q.q)}</p>
+    ${q.c?`<pre class="q-code">${esc(q.c)}</pre>`:""}
+    <div class="opts" role="${multi?"group":"radiogroup"}">
+      ${q.o.map((o,i)=>`<button class="opt ${multi?"multi":""} ${sel.includes(i)?"sel":""}" data-i="${i}" role="${multi?"checkbox":"radio"}" aria-checked="${sel.includes(i)}"><span class="key">${KEYS[i]}</span><span class="txt">${esc(o)}</span></button>`).join("")}
+    </div>
+    <div class="row" style="margin-top:18px">
+      <button class="btn" id="ex-prev" ${ex.cur===0?"disabled":""}>Previous</button>
+      <button class="btn primary" id="ex-next">${ex.cur===EXAM.length-1?"Review & submit":"Next"}</button>
+      <span class="spacer"></span>
+      <button class="btn" id="ex-submit">Submit exam</button>
+    </div>
+    <div id="ex-confirm"></div>
+  </div>
+  <div class="panel">
+    <div class="row" style="margin-bottom:10px"><b style="font-family:var(--f-display)">Question map</b><span class="spacer"></span>
+      <div class="legend"><span><i style="background:var(--accent-soft)"></i>Answered</span><span><i style="background:var(--warn)"></i>Flagged</span></div></div>
+    <div class="palette">${ex.order.map((qj,n)=>`<button class="pal ${(ex.ans[qj]||[]).length?"answered":""} ${ex.flag[qj]?"flagged":""} ${n===ex.cur?"current":""}" data-n="${n}" aria-label="Question ${n+1}">${n+1}</button>`).join("")}</div>
+  </div>`;
+  examEl.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
+    const i=+b.dataset.i; let s=[...(ex.ans[qi]||[])];
+    if(multi){ s = s.includes(i)? s.filter(x=>x!==i) : [...s,i]; } else s=[i];
+    ex.ans[qi]=s; renderExamQ();
+  });
+  $("#ex-flag").onclick=()=>{ ex.flag[qi]=!ex.flag[qi]; renderExamQ(); };
+  $("#ex-prev").onclick=()=>{ ex.cur--; pendingSubmit=false; renderExamQ(); };
+  $("#ex-next").onclick=()=>{ if(ex.cur<EXAM.length-1){ex.cur++; pendingSubmit=false; renderExamQ();} else askSubmit(); };
+  $("#ex-submit").onclick=askSubmit;
+  examEl.querySelectorAll(".pal").forEach(b=>b.onclick=()=>{ ex.cur=+b.dataset.n; pendingSubmit=false; renderExamQ(); });
+  if(pendingSubmit) askSubmit();
+}
+
+function askSubmit(){
+  pendingSubmit=true;
+  const un = EXAM.length - Object.keys(ex.ans).filter(k=>ex.ans[k].length).length;
+  const fl = Object.values(ex.flag).filter(Boolean).length;
+  $("#ex-confirm").innerHTML = `<div class="confirm" style="margin-top:14px">
+    <b>Submit now?</b> ${un?`${un} question${un>1?"s are":" is"} unanswered and will be marked wrong. `:"All questions answered. "}${fl?`${fl} flagged.`:""}
+    <div class="row" style="margin-top:10px"><button class="btn primary" id="ex-yes">Submit and score</button><button class="btn" id="ex-no">Keep working</button></div></div>`;
+  $("#ex-yes").onclick=submitExam;
+  $("#ex-no").onclick=()=>{ pendingSubmit=false; $("#ex-confirm").innerHTML=""; };
+}
+
+function submitExam(){
+  ex.done=true; clearInterval(tick); pendingSubmit=false;
+  ex.used = Math.min(EX_MIN*60000, EX_MIN*60000-(ex.end-Date.now()));
+  resFilter="all"; renderResults();
+  window.scrollTo({top:0});
+}
+
+function renderResults(){
+  const res = ex.order.map(qi=>({qi, ok: same(ex.ans[qi]||[], EXAM[qi].a)}));
+  const correct = res.filter(r=>r.ok).length, pct = Math.round(correct/EXAM.length*100);
+  const by = {}; DOMAINS.forEach(d=>by[d.id]={t:0,c:0});
+  res.forEach(r=>{ const d=EXAM[r.qi].d; by[d].t++; if(r.ok) by[d].c++; });
+  const verdict = pct>=85 ? `<span class="verdict-ok">Exam-ready range</span>` : pct>=70 ? `<span style="color:var(--warn);font-weight:700">Close: review weak domains</span>` : `<span class="verdict-bad">More study needed</span>`;
+  const list = res.map((r,n)=>({...r,n})).filter(r=> resFilter==="all" || (resFilter==="wrong" && !r.ok) || (resFilter==="flag" && ex.flag[r.qi]));
+  examEl.innerHTML = `
+  <div class="panel">
+    <div class="eyebrow">Practice exam results</div>
+    <div class="stat-row" style="margin-top:10px">
+      <div><div class="score-big">${pct}%</div></div>
+      <div><div class="lbl">Correct</div><div class="val">${correct} / ${EXAM.length}</div></div>
+      <div><div class="lbl">Time used</div><div class="val">${fmt(ex.used)}</div></div>
+      <div><div class="lbl">Verdict</div><div class="val" style="font-size:16px">${verdict}</div></div>
+    </div>
+    <div class="tbl-wrap" style="margin-top:18px"><table class="dom-table">
+      <tr><th>Domain</th><th class="num">Score</th><th style="width:40%">Accuracy</th></tr>
+      ${DOMAINS.map(d=>{const b=by[d.id], p=Math.round(b.c/b.t*100); return `<tr><td>${d.name}</td><td class="num">${b.c}/${b.t} · ${p}%</td><td><div class="bar"><span class="${p>=85?"ok":p<70?"low":""}" style="width:${p}%"></span></div></td></tr>`}).join("")}
+    </table></div>
+    <div class="row" style="margin-top:18px">
+      <button class="btn primary" id="ex-retake">Retake exam</button>
+      <span class="spacer"></span>
+      <div class="filters">
+        <button class="fchip" data-f="all" aria-pressed="${resFilter==="all"}">All (${EXAM.length})</button>
+        <button class="fchip" data-f="wrong" aria-pressed="${resFilter==="wrong"}">Incorrect (${EXAM.length-correct})</button>
+        <button class="fchip" data-f="flag" aria-pressed="${resFilter==="flag"}">Flagged (${Object.values(ex.flag).filter(Boolean).length})</button>
+      </div>
+    </div>
+  </div>
+  <div class="panel" style="display:grid;gap:16px">
+    ${list.length? list.map(r=>{ const q=EXAM[r.qi], s=ex.ans[r.qi]||[]; return `<div class="res-item">
+      <div class="q-head"><span class="rv-num">Q${r.n+1}</span><span class="chip">${DNAME[q.d]}</span>${prompt2(q)}<span class="spacer"></span>${r.ok?`<span class="verdict-ok">Correct</span>`:`<span class="verdict-bad">${s.length?"Incorrect":"Not answered"}</span>`}</div>
+      <p class="q-text">${esc(q.q)}</p>${q.c?`<pre class="q-code">${esc(q.c)}</pre>`:""}
+      <div class="opts">${q.o.map((o,i)=>`<button class="opt ${q.a.length>1?"multi":""} ${q.a.includes(i)?"right":s.includes(i)?"wrong":""}" disabled><span class="key">${KEYS[i]}</span><span class="txt">${esc(o)}</span></button>`).join("")}</div>
+      <div class="explain"><b>Why:</b> ${esc(q.e)}</div></div>`}).join("") : `<p class="muted">No questions in this filter.</p>`}
+  </div>`;
+  $("#ex-retake").onclick=renderExamStart;
+  examEl.querySelectorAll(".fchip").forEach(b=>b.onclick=()=>{ resFilter=b.dataset.f; renderResults(); });
+}
+
+/* ---------------- REVIEW ---------------- */
+let rvSet = 1;                     // 1 = Set A (REVIEW), 2 = Set B (REVIEW2)
+const RQ = () => rvSet===2 ? REVIEW2 : REVIEW;
+const rvAll = {1:{}, 2:{}};        // answers kept separately per set
+let rv = rvAll[1]; // index -> {sel:[], checked:bool}
+let rvFilter = "all", rvReveal = false;
+function rvStats(){
+  const done = Object.entries(rv).filter(([,v])=>v.checked);
+  const c = done.filter(([i,v])=>same(v.sel, RQ()[i].a)).length;
+  $("#rv-answered").textContent = `${done.length} / ${RQ().length}`;
+  $("#rv-correct").textContent = c;
+  $("#rv-acc").textContent = done.length? Math.round(c/done.length*100)+"%" : "–";
+}
+function renderFilters(){
+  const c = domainCounts(RQ());
+  $("#rv-filters").innerHTML = `<button class="fchip" data-f="all" aria-pressed="${rvFilter==="all"}">All domains</button>` +
+    DOMAINS.map(d=>`<button class="fchip" data-f="${d.id}" aria-pressed="${rvFilter===d.id}">${d.name} (${c[d.id]})</button>`).join("");
+  $("#rv-filters").querySelectorAll(".fchip").forEach(b=>b.onclick=()=>{ rvFilter=b.dataset.f; renderFilters(); renderReview(); });
+}
+function cardHTML(q,i){
+  const st = rv[i]||{sel:[],checked:false}, multi=q.a.length>1, show = st.checked || rvReveal;
+  const ok = st.checked && same(st.sel,q.a);
+  return `<div class="q-head"><span class="rv-num">R${String(i+1).padStart(2,"0")}</span><span class="chip">${DNAME[q.d]}</span>${prompt2(q)}<span class="spacer"></span>${st.checked?(ok?`<span class="verdict-ok">Correct</span>`:`<span class="verdict-bad">Incorrect</span>`):""}</div>
+    <p class="q-text">${esc(q.q)}</p>${q.c?`<pre class="q-code">${esc(q.c)}</pre>`:""}
+    <div class="opts">${q.o.map((o,j)=>{ let cls=""; if(show){ if(q.a.includes(j)) cls="right"; else if(st.sel.includes(j)) cls="wrong"; } else if(st.sel.includes(j)) cls="sel";
+      return `<button class="opt ${multi?"multi":""} ${cls}" data-j="${j}" ${show?"disabled":""}><span class="key">${KEYS[j]}</span><span class="txt">${esc(o)}</span></button>`}).join("")}</div>
+    ${multi && !show ? `<div class="row" style="margin-top:12px"><button class="btn primary rv-check" ${st.sel.length===q.a.length?"":"disabled"}>Check answer</button><span class="muted" style="font-size:13px">Select ${q.a.length} options</span></div>`:""}
+    ${show?`<div class="explain"><b>Why:</b> ${esc(q.e)}</div>`:""}`;
+}
+function renderReview(){
+  const list = $("#rv-list");
+  list.innerHTML = RQ().map((q,i)=> (rvFilter==="all"||rvFilter===q.d) ? `<div class="rv-card" data-i="${i}">${cardHTML(q,i)}</div>` : "").join("");
+  list.querySelectorAll(".rv-card").forEach(bindCard);
+  rvStats();
+}
+function bindCard(card){
+  const i=+card.dataset.i, q=RQ()[i], multi=q.a.length>1;
+  card.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
+    const j=+b.dataset.j, st = rv[i] || (rv[i]={sel:[],checked:false});
+    if(multi){ st.sel = st.sel.includes(j)? st.sel.filter(x=>x!==j) : (st.sel.length<q.a.length? [...st.sel,j] : st.sel); }
+    else { st.sel=[j]; st.checked=true; }
+    card.innerHTML=cardHTML(q,i); bindCard(card); rvStats();
+  });
+  const chk = card.querySelector(".rv-check");
+  if(chk) chk.onclick=()=>{ rv[i].checked=true; card.innerHTML=cardHTML(q,i); bindCard(card); rvStats(); };
+}
+document.querySelectorAll("#rv-sets .fchip").forEach(b=>b.onclick=()=>{
+  rvSet=+b.dataset.set; rv=rvAll[rvSet]; rvFilter="all"; rvReveal=false;
+  $("#rv-reveal").textContent="Show all answers";
+  document.querySelectorAll("#rv-sets .fchip").forEach(x=>x.setAttribute("aria-pressed", x===b));
+  renderFilters(); renderReview();
+});
+$("#rv-reset").onclick=()=>{ rv=rvAll[rvSet]={}; rvReveal=false; $("#rv-reveal").textContent="Show all answers"; renderReview(); };
+$("#rv-reveal").onclick=()=>{ rvReveal=!rvReveal; $("#rv-reveal").textContent= rvReveal?"Hide answers":"Show all answers"; renderReview(); };
+
+/* ---------------- LABS ---------------- */
+function labProgress(){
+  const boxes=[...document.querySelectorAll(".done input[data-lab]")];
+  const n=boxes.filter(b=>b.checked).length;
+  $("#lab-progress").textContent = `${n} of ${boxes.length} labs marked complete.`;
+  boxes.forEach(b=>{ const s=document.querySelector(`.lab-state[data-state="${b.dataset.lab}"]`); if(s) s.textContent=b.checked?"✓ Done":""; });
+}
+(function initLabs(){
+  const saved = store("ccna-labs") || {};
+  document.querySelectorAll(".done input[data-lab]").forEach(b=>{
+    b.checked = !!saved[b.dataset.lab];
+    b.onchange=()=>{ const s=store("ccna-labs")||{}; s[b.dataset.lab]=b.checked; store("ccna-labs",s); labProgress(); };
+  });
+  labProgress();
+})();
+
+/* ---------------- boot ---------------- */
+renderExamStart(); renderFilters(); renderReview();
+show(location.hash.slice(1)||"exam");
+</script>
